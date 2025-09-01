@@ -20,6 +20,7 @@
         mask-image: linear-gradient(to bottom, black 80%, transparent 50%);
         -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
     }
+    
     </style>
     <script src="main.js"></script>
 
@@ -27,10 +28,10 @@
 </head>
 <body class="bg-gray-200">
     <header class="fixed top-0 left-0 w-full bg-white z-20">
-    <div class="flex justify-between items-center text-center py-6 md:px-15 px-10 text-[18px]">
+        <div class="flex justify-between items-center text-center py-6 md:px-15 px-10 text-[18px]">
         <!-- Logo -->
         <div>
-        <h2 class="font-bold">Hafidz</h2>
+            <h2 class="font-bold">Hafidz</h2>
         </div>
 
         <!-- Navbar Links (Desktop) -->
@@ -39,32 +40,35 @@
             <a href="" class="px-4">Profil</a>
             <a href="" class="px-4">Skills</a>
             <div class="text-center">
-                <a href="https://www.instagram.com/mhdhfdz_11/" class="bg-black p-3 rounded text-white text-[15px]">
-                    @mhdhfdz_11
-                </a>
+            <a href="https://www.instagram.com/mhdhfdz_11/" 
+                class="bg-black p-3 rounded text-white text-[15px]">
+                @mhdhfdz_11
+            </a>
             </div>
         </div>
 
         <!-- Hamburger Button (Mobile) -->
         <button id="menu-btn" class="md:hidden focus:outline-none">
-        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" 
-            viewBox="0 0 24 24" stroke="currentColor">
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                class="h-8 w-8" fill="none" viewBox="0 0 24 24" 
+                stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
-            d="M4 6h16M4 12h16M4 18h16" />
-        </svg>
+                    d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
         </button>
-    </div>
+        </div>
 
-    <!-- Mobile Menu -->
-    <div id="menu" class="hidden text-end flex-col space-y-4 px-10 py-4 bg-white shadow-md md:hidden absolute top-15 right-3 max-w-[800px] drop-shadow-lg rounded-md">
+        <!-- Mobile Menu -->
+        <div id="menu" class="hidden text-end flex-col space-y-4 px-10 py-4 bg-white shadow-md md:hidden absolute top-15 right-3 max-w-[800px] drop-shadow-lg rounded-md z-50 ">
         <a href="" class="block">Home</a>
         <a href="" class="block">Profil</a>
         <a href="" class="block">Skills</a>
-        <a href="https://www.instagram.com/mhdhfdz_11/" class="bg-black p-3 rounded text-white text-[15px] inline-block">
-        @mhdhfdz_11
+        <a href="https://www.instagram.com/mhdhfdz_11/" 
+            class="bg-black p-3 rounded text-white text-[15px] inline-block">
+            @mhdhfdz_11
         </a>
-    </div>
-</header>
+        </div>
+    </header>
     <!-- Herp Section -->
     <section class="-z-3">
         <div class="p-8 w-full h-[100vh] bg-linear-to-b from-white from-70% to-gray-100 flex items-top lg:items-center justify-center relative overflow-hidden">
@@ -74,24 +78,25 @@
             </p>
             
             <!-- Solid text -->
-            <h1 class="lg:text-[120px] text-[60px] font-extrabold leading-none" style="font-family: 'Poppins', sans-serif;">
+            <h1 class="lg:text-[120px] text-[50px] font-extrabold leading-none" style="font-family: 'Poppins', sans-serif;">
                 Programmer
             </h1>
             
             <!-- Outline text -->
-            <h1 class="lg:text-[120px] text-[60px] font-extrabold leading-none stroke-text" style="font-family: 'Poppins', sans-serif;">
+            <h1 class="lg:text-[120px] text-[50px] font-extrabold leading-none stroke-text" style="font-family: 'Poppins', sans-serif;">
                 & Web Developer
             </h1>
-            <div class="w-full flex text-center text-[18px] pt-5 justify-between text-gray-700">
+            <div class="w-full flex text-center text-sm lg:text-[18px] lg:pt-5 pt-2 justify-center lg:justify-between text-gray-700">
                 <p>Programmer handal</p>
-                <p>focus, disipline, give up</p>
+                <p></p>
+            </div>
+            <div class="lg:absolute flex justify-center gap-4 lg:-left-0 bottom-70 lg:bottom-10 pt-3 w-full z-30">
+                <a href="" class="bg-black p-3 px-4 rounded-md text-gray-200 border-2 border-solid border-white lg:text-[14px] text-[10px]">You Need Website</a>
+                <a href="" class="p-3 px-4 rounded-md border-2 border-solid lg:text-[14px] text-[10px]">You Need Aplication</a>
             </div>
             </div>
-            <img src="assets/coba2.png" class="absolute w-[800px] -bottom-40 fade-bottom" alt="">
-            <div class="absolute flex justify-center gap-4 bottom-10 w-full ">
-                <a href="" class="bg-black p-3 px-4 rounded-md text-gray-200 border-2 border-solid border-white">You Need Website</a>
-                <a href="" class="p-3 px-4 rounded-md border-2 border-solid">You Need Aplication</a>
-            </div>
+            <img src="assets/coba2.png" class="absolute w-[800px] -bottom-10 lg:-bottom-40 fade-bottom " alt="">
+            
         </div>
     </section>
     
@@ -149,58 +154,86 @@
     </div>
     </section>
     <!-- Skills -->
-    <section class="w-full bg-gray-100 py-6">
-    <div class="max-w-4xl mx-auto px-4">
+    <section class="w-full bg-gradient-to-b from-gray-50 to-gray-100 py-12">
+    <div class="max-w-5xl mx-auto px-6">
         <!-- Navbar Filter -->
-        <div class="flex justify-center gap-4 border-b pb-2 mb-6">
-            <button onclick="showTab('skills')" id="btn-skills" class="px-4 py-2 font-semibold text-gray-600 hover:text-black border-b-2 border-transparent hover:border-yellow-400 transition">
-                Skills
-            </button>
-            <button onclick="showTab('pengalaman')" id="btn-pengalaman" class="px-4 py-2 font-semibold text-gray-600 hover:text-black border-b-2 border-transparent hover:border-yellow-400 transition">
-                Pengalaman
-            </button>
+        <div class="flex justify-center gap-4 border-b pb-4 mb-10">
+        <button onclick="showTab('skills')" id="btn-skills" 
+            class="px-6 py-2 font-semibold text-gray-600 hover:text-gray-900 border-b-4 border-transparent hover:border-indigo-500 transition duration-300">
+            Skills
+        </button>
+        <button onclick="showTab('pengalaman')" id="btn-pengalaman" 
+            class="px-6 py-2 font-semibold text-gray-600 hover:text-gray-900 border-b-4 border-transparent hover:border-indigo-500 transition duration-300">
+            Pengalaman
+        </button>
         </div>
 
         <!-- Konten Skills -->
         <div id="skills" class="tab-content">
-        <h2 class="text-xl font-bold mb-3">Skills</h2>
-        <div class="grid grid-cols-3 sm:grid-cols-5 gap-6">
-            <div class="flex bg-white p-3 w-[150px] h-[150px] flex-col items-center">
-            <img src="/assets/html_logo.png" alt="HTML" class="w-16 h-16 object-contain">
-            <p class="mt-2 text-sm font-medium">HTML</p>
+        <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 lg:gap-6 gap-2">
+            
+            <!-- Card Skill -->
+            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
+            <img src="assets/html_logo.png" alt="HTML" class="w-14 h-14 object-contain mb-3">
+            <p class="text-sm font-medium text-gray-700">HTML</p>
             </div>
-            <div class="flex flex-col items-center">
-            <img src="css.png" alt="CSS" class="w-16 h-16 object-contain">
-            <p class="mt-2 text-sm font-medium">CSS</p>
+
+            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
+            <img src="assets/css.jpeg" alt="CSS" class="w-14 h-14 object-contain mb-3">
+            <p class="text-sm font-medium text-gray-700">CSS</p>
             </div>
-            <div class="flex flex-col items-center">
-            <img src="js.png" alt="JavaScript" class="w-16 h-16 object-contain">
-            <p class="mt-2 text-sm font-medium">JavaScript</p>
+
+            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
+            <img src="assets/js.jpeg" alt="JavaScript" class="w-14 h-14 object-contain mb-3">
+            <p class="text-sm font-medium text-gray-700">JavaScript</p>
             </div>
-            <div class="flex flex-col items-center">
-            <img src="python.png" alt="Python" class="w-16 h-16 object-contain">
-            <p class="mt-2 text-sm font-medium">Python</p>
+
+            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
+            <img src="assets/php.jpeg" alt="Php" class="w-14 h-14 object-contain mb-3">
+            <p class="text-sm font-medium text-gray-700">PHP</p>
             </div>
-            <div class="flex flex-col items-center">
-            <img src="laravel.png" alt="Laravel" class="w-16 h-16 object-contain">
-            <p class="mt-2 text-sm font-medium">Laravel</p>
+
+            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
+            <img src="assets/laravel.jpeg" alt="Laravel" class="w-14 h-14 object-contain mb-3">
+            <p class="text-sm font-medium text-gray-700">Laravel</p>
             </div>
+
         </div>
         </div>
 
         <!-- Konten Pengalaman -->
         <div id="pengalaman" class="tab-content hidden">
-        <h2 class="text-xl font-bold mb-3">Pengalaman</h2>
-        <ul class="list-disc ml-6 space-y-1">
-            <li>Magang di PT Teknologi XYZ (2024)</li>
-            <li>Freelance Web Developer (2023 - sekarang)</li>
-            <li>Panitia Webinar IT Kampus (2022)</li>
+        <h2 class="text-2xl font-bold mb-5 text-gray-800">Pengalaman</h2>
+        <ul class="space-y-4">
+            <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
+            <span class="w-3 h-3 bg-indigo-500 rounded-full"></span>
+            <p class="text-gray-700">Magang di PT Teknologi XYZ (2024)</p>
+            </li>
+            <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
+            <span class="w-3 h-3 bg-indigo-500 rounded-full"></span>
+            <p class="text-gray-700">Freelance Web Developer (2023 - sekarang)</p>
+            </li>
+            <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
+            <span class="w-3 h-3 bg-indigo-500 rounded-full"></span>
+            <p class="text-gray-700">Panitia Webinar IT Kampus (2022)</p>
+            </li>
         </ul>
         </div>
     </div>
     </section>
 
-<script src="main.js"></script>
+<script>
+  function showTab(tab) {
+    document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
+    document.getElementById(tab).classList.remove("hidden");
+
+    document.querySelectorAll("button").forEach(btn => btn.classList.remove("text-indigo-600", "border-indigo-500"));
+    document.getElementById("btn-" + tab).classList.add("text-indigo-600", "border-indigo-500");
+  }
+</script>
+
+
+<script src="script.js"></script>
 
 </body>
 </html>
