@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portfolio</title>
+    <title>Personal Website</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+    // ini wajib, biar pdf.js bisa jalan
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    </script>
 
     <style>
     .stroke-text {
@@ -20,25 +33,44 @@
         mask-image: linear-gradient(to bottom, black 80%, transparent 50%);
         -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
     }
+    @keyframes slideDown {
+    0% {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+    }
+
+    /* Class untuk dipakai */
+    .slide-down {
+    animation: slideDown 0.3s ease-out forwards;
+    }
+    html {
+    scroll-behavior: smooth;
+    }
+
     
     </style>
     <script src="main.js"></script>
 
 
 </head>
-<body class="bg-gray-200">
+<body class="bg-gray-100">
     <header class="fixed top-0 left-0 w-full bg-white z-20">
-        <div class="flex justify-between items-center text-center py-6 md:px-15 px-10 text-[18px]">
+        <div class="flex justify-between items-center text-center py-3 lg:py-6 md:px-15 px-10 text-[18px]">
         <!-- Logo -->
         <div>
-            <h2 class="font-bold">Hafidz</h2>
+            <img src="assets/logo.png" class="lg:w-[120px] w-[100px]" alt="">
         </div>
 
         <!-- Navbar Links (Desktop) -->
         <div class="hidden md:flex text-center">
-            <a href="" class="px-4">Home</a>
-            <a href="" class="px-4">Profil</a>
-            <a href="" class="px-4">Skills</a>
+            <a href="#home" class="px-4 font-semibold">Home</a>
+            <a href="#profil" class="px-4 font-semibold">Profil</a>
+            <a href="#skill" class="px-4 font-semibold">Portfolio</a>
             <div class="text-center">
             <a href="https://www.instagram.com/mhdhfdz_11/" 
                 class="bg-black p-3 rounded text-white text-[15px]">
@@ -59,10 +91,10 @@
         </div>
 
         <!-- Mobile Menu -->
-        <div id="menu" class="hidden text-end flex-col space-y-4 px-10 py-4 bg-white shadow-md md:hidden absolute top-15 right-3 max-w-[800px] drop-shadow-lg rounded-md z-50 ">
-        <a href="" class="block">Home</a>
-        <a href="" class="block">Profil</a>
-        <a href="" class="block">Skills</a>
+        <div id="menu" class="hidden text-end flex-col space-y-4 px-10 py-4 bg-white shadow-md md:hidden absolute top-15 right-3 max-w-[800px] drop-shadow-lg rounded-md z-50 slide-down">
+        <a href="#home" class="block">Home</a>
+        <a href="#profil" class="block">Profil</a>
+        <a href="#skill" class="block">Portfolio</a>
         <a href="https://www.instagram.com/mhdhfdz_11/" 
             class="bg-black p-3 rounded text-white text-[15px] inline-block">
             @mhdhfdz_11
@@ -70,38 +102,50 @@
         </div>
     </header>
     <!-- Herp Section -->
-    <section class="-z-3">
-        <div class="p-8 w-full h-[100vh] bg-linear-to-b from-white from-70% to-gray-100 flex items-top lg:items-center justify-center relative overflow-hidden">
-            <div class="text-center p-5 pt-20 lg:pt-0">
-            <p class="text-[14px] lg:text-xl text-gray-700">
+    <section class="-z-3" id="home">
+        <div class="p-8 w-full h-[100vh] bg-linear-to-b from-white from-70% to-gray-100 flex items-top lg:items-center justify-center relative overflow-hidden px-10">
+            <div class="text-center p-5  pt-25 lg:pt-0">
+            <p class="text-[14px] lg:text-xl text-gray-700 animate__animated animate__fadeInRight">
                 Hi, my name is Muhammad Hafidz, I'm a Student
             </p>
             
             <!-- Solid text -->
-            <h1 class="lg:text-[120px] text-[50px] font-extrabold leading-none" style="font-family: 'Poppins', sans-serif;">
+            <h1 class="lg:text-[120px] text-[50px] font-extrabold leading-none animate__animated animate__fadeInLeft" style="font-family: 'Poppins', sans-serif;">
                 Programmer
             </h1>
             
             <!-- Outline text -->
-            <h1 class="lg:text-[120px] text-[50px] font-extrabold leading-none stroke-text" style="font-family: 'Poppins', sans-serif;">
+            <h1 class="lg:text-[120px] text-[50px] font-extrabold leading-none stroke-text animate__animated animate__fadeInRight" style="font-family: 'Poppins', sans-serif;">
                 & Web Developer
             </h1>
-            <div class="w-full flex text-center text-sm lg:text-[18px] lg:pt-5 pt-2 justify-center lg:justify-between text-gray-700">
-                <p>Programmer handal</p>
+            <div class="w-full flex text-center text-sm lg:text-[18px] lg:pt-5 pt-2 justify-center lg:justify-between text-gray-700 animate__animated animate__fadeInLeft">
+                <p>Base in Cirebon, Indonesia</p>
                 <p></p>
             </div>
-            <div class="lg:absolute flex justify-center gap-4 lg:-left-0 bottom-70 lg:bottom-10 pt-3 w-full z-30">
-                <a href="" class="bg-black p-3 px-4 rounded-md text-gray-200 border-2 border-solid border-white lg:text-[14px] text-[10px]">You Need Website</a>
-                <a href="" class="p-3 px-4 rounded-md border-2 border-solid lg:text-[14px] text-[10px]">You Need Aplication</a>
+            <div class="lg:absolute flex justify-center gap-4 lg:-left-0 bottom-70 lg:bottom-10 pt-3 w-full z-10">
+                <a href="https://wa.me/6281291300572" class="bg-black p-3 px-4 rounded-md text-gray-200 border-2 border-solid border-white lg:text-[14px] text-[13px] animate__animated animate__fadeInLeft">You Need Website</a>
+                <a href="https://wa.me/6281291300572" class="p-3 px-4 rounded-md border-2 border-solid lg:text-[14px] text-[13px] animate__animated animate__fadeInRight">You Need Aplication</a>
             </div>
             </div>
-            <img src="assets/foto2.png" class="absolute w-full min-w-[800px] lg:max-w-[1000px] -bottom-55 lg:-bottom-67 fade-bottom" alt="">
+            <img src="assets/foto2.png" 
+            class="absolute bottom-[-270px] lg:bottom-[-300px] left-1/2 -translate-x-1/2 
+                    w-[300px] sm:w-[500px] md:w-[700px] lg:w-[1000px] 
+                    min-w-[800px] animate__animated animate__fadeInUp fade-bottom" 
+            alt="">
+
+            
+            <!-- <img src="assets/foto2.png" 
+            class="absolute bottom-0 left-1/2 -translate-x-1/2 
+                    w-[1000px] sm:w-[500px] md:w-[700px] lg:w-[1000px] 
+                    animate__animated animate__fadeInUp min-w-[800px] fade-bottom" 
+            alt=""> -->
+
             
         </div>
     </section>
     
-    <section class="w-full bg-white flex justify-center p-8 z-10">
-    <div class="flex flex-col sm:flex-row justify-center bg-white transition hover:shadow-xl max-w-[900px] p-10 text-[20px]">
+    <section class="w-full bg-white flex justify-center p-8 z-10" id="profil">
+    <div class="flex flex-col sm:flex-row justify-center bg-white transition hover:shadow-xl max-w-[900px] p-10 text-[20px] opacity-0 animate-on-scroll" id="profil-card">
         <div class="flex max-h-[350px]">
         <!-- Tanggal lahir -->
         <div class="rotate-180 p-2 [writing-mode:_vertical-lr]">
@@ -145,7 +189,7 @@
             <a
             href="https://www.instagram.com/mhdhfdz_11/"
             target="_blank"
-            class="block bg-black px-5 py-3 text-center text-xs font-bold text-white uppercase transition hover:bg-yellow-400 rounded"
+            class="block bg-black px-5 py-3 text-center text-xs font-bold text-white uppercase transition hover:bg-gray-700 rounded"
             >
             Lihat Instagram
             </a>
@@ -154,85 +198,87 @@
     </div>
     </section>
     <!-- Skills -->
-    <section class="w-full bg-gradient-to-b from-gray-50 to-gray-100 py-12">
-    <div class="max-w-5xl mx-auto px-6">
+    <section class="w-full bg-gradient-to-b from-gray-50 to-gray-100 py-12" id="skill">
+    <div class="max-w-5xl mx-auto px-6 ">
         <!-- Navbar Filter -->
-        <div class="flex justify-center gap-4 border-b pb-4 mb-10">
+        <div class="flex justify-center gap-2 px-[50px] border-b pb-4 mb-10">
         <button onclick="showTab('skills')" id="btn-skills" 
-            class="px-6 py-2 font-semibold text-gray-600 hover:text-gray-900 border-b-4 border-transparent hover:border-indigo-500 transition duration-300">
+            class="px-6 py-2 font-semibold text-[15px] text-gray-600 hover:text-gray-900 border-b-4 border-transparent transition duration-300">
             Skills
         </button>
         <button onclick="showTab('pengalaman')" id="btn-pengalaman" 
-            class="px-6 py-2 font-semibold text-gray-600 hover:text-gray-900 border-b-4 border-transparent hover:border-indigo-500 transition duration-300">
+            class="px-6 py-2 font-semibold text-[15px] text-gray-600 hover:text-gray-900 border-b-4 border-transparent  transition duration-300">
             Pengalaman
+        </button>
+        <button onclick="showTab('sertificate')" id="btn-sertificate" 
+            class="px-6 py-2 font-semibold text-[15px] text-gray-600 hover:text-gray-900 border-b-4 border-transparent  transition duration-300">
+            Sertificate
         </button>
         </div>
 
         <!-- Konten Skills -->
         <div id="skills" class="tab-content">
-        <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 lg:gap-6 gap-2">
-            
-            <!-- Card Skill -->
-            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
-            <img src="assets/html_logo.png" alt="HTML" class="w-14 h-14 object-contain mb-3">
-            <p class="text-sm font-medium text-gray-700">HTML</p>
-            </div>
-
-            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
-            <img src="assets/css.jpeg" alt="CSS" class="w-14 h-14 object-contain mb-3">
-            <p class="text-sm font-medium text-gray-700">CSS</p>
-            </div>
-
-            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
-            <img src="assets/js.jpeg" alt="JavaScript" class="w-14 h-14 object-contain mb-3">
-            <p class="text-sm font-medium text-gray-700">JavaScript</p>
-            </div>
-
-            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
-            <img src="assets/php.jpeg" alt="Php" class="w-14 h-14 object-contain mb-3">
-            <p class="text-sm font-medium text-gray-700">PHP</p>
-            </div>
-
-            <div class="bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center">
-            <img src="assets/laravel.jpeg" alt="Laravel" class="w-14 h-14 object-contain mb-3">
-            <p class="text-sm font-medium text-gray-700">Laravel</p>
-            </div>
-
+            <div id="skills-container" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-5 animate-on-scroll opacity-0"></div>
         </div>
-        </div>
+
 
         <!-- Konten Pengalaman -->
-        <div id="pengalaman" class="tab-content hidden">
+        <div id="pengalaman" class="tab-content hidden animate-on-scroll opacity-0">
         <h2 class="text-2xl font-bold mb-5 text-gray-800">Pengalaman</h2>
         <ul class="space-y-4">
             <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
-            <span class="w-3 h-3 bg-indigo-500 rounded-full"></span>
-            <p class="text-gray-700">Magang di PT Teknologi XYZ (2024)</p>
+            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <p class="text-gray-700">Magang di PT Mega Mentari Gigantara</p>
             </li>
             <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
-            <span class="w-3 h-3 bg-indigo-500 rounded-full"></span>
-            <p class="text-gray-700">Freelance Web Developer (2023 - sekarang)</p>
+            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <p class="text-gray-700">Freelance Web Developer (2024 - sekarang)</p>
             </li>
             <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
-            <span class="w-3 h-3 bg-indigo-500 rounded-full"></span>
-            <p class="text-gray-700">Panitia Webinar IT Kampus (2022)</p>
+            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <p class="text-gray-700">Panitia Webinar IT Kampus (2024)</p>
             </li>
+            <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
+            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <p class="text-gray-700">Panitia Seminar Nasional Cyber Security (2024)</p>
+            </li>
+            <li class="flex items-center gap-3 bg-white shadow-sm rounded-xl p-4 hover:shadow-md transition">
+            <span class="w-3 h-3 bg-yellow-500 rounded-full"></span>
+            <p class="text-gray-700">Ketua Sub Divisi Pengembangan Teknologi Informasi di UKM CE</p>
+            
         </ul>
         </div>
+        <!-- sertificate -->
+        <!-- Konten Sertificate -->
+        <div id="sertificate" class="tab-content hidden animate-on-scroll opacity-0">
+        <h2 class="text-2xl font-bold mb-5 text-gray-800">Sertificate</h2>
+        
+            <!-- Sertifikat 1 -->
+            <!-- Sertifikat dengan embed PDF -->
+            <div id="pdf-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 items-center justify-center">
+                <div class="bg-white shadow-sm rounded-xl overflow-hidden hover:shadow-md transition">
+                <a href="assets/sertifikat2.pdf" target="_blank">
+                    <img src="assets/AlibabaCloudCertifikat.png" alt="Sertifikat" class="w-full h-48 object-cover">
+                </a>
+                <div class="p-4">
+                    <p class="font-semibold text-gray-800">AlibabaCloudCertifikat</p>
+                    <p class="text-gray-600 text-sm">2024</p>
+                </div>
+                </div>
+            </div>
+            
+            
+            
+        </div>
+
     </div>
     </section>
 
-<script>
-  function showTab(tab) {
-    document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
-    document.getElementById(tab).classList.remove("hidden");
-
-    document.querySelectorAll("button").forEach(btn => btn.classList.remove("text-indigo-600", "border-indigo-500"));
-    document.getElementById("btn-" + tab).classList.add("text-indigo-600", "border-indigo-500");
-  }
-</script>
-
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 
+        "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js";
+    </script>
 <script src="script.js"></script>
 
 </body>

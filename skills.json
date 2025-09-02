@@ -1,0 +1,14 @@
+[
+    { "name": "HTML", "icon": "assets/html_logo.png" },
+    { "name": "CSS", "icon": "assets/css.jpeg" },
+    { "name": "JavaScript", "icon": "assets/js.jpeg" },
+    { "name": "PHP", "icon": "assets/php.jpeg" },
+    { "name": "Laravel", "icon": "assets/laravel.png" },
+    { "name": "Tailwind", "icon": "assets/taillwind.png" },
+    { "name": "Boostrap", "icon": "assets/boostrap.png" },
+    { "name": "Next Js", "icon": "assets/next.png" },
+    { "name": "React", "icon": "assets/react.png" },
+    { "name": "MySql", "icon": "assets/mysql.png" },
+    { "name": "Python", "icon": "assets/python.png" },
+    { "name": "Git", "icon": "assets/git.png" }
+]
