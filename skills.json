@@ -10,5 +10,6 @@
     { "name": "React", "icon": "assets/react.png" },
     { "name": "MySql", "icon": "assets/mysql.png" },
     { "name": "Python", "icon": "assets/python.png" },
-    { "name": "Git", "icon": "assets/git.png" }
+    { "name": "Git", "icon": "assets/git.png" },
+    { "name": "Linux", "icon": "assets/linux.png"}
 ]
