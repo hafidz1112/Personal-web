@@ -21,15 +21,70 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animatedElements.forEach(el => observer.observe(el));
 
+  // ========================================================
+  // LOGIKA AMBIL DATA PORTFOLIO DARI FILE PROJECTS.JSON
+  // ========================================================
+  fetch("projects.json")
+    .then(response => {
+      if (!response.ok) throw new Error("Gagal memuat projects.json");
+      return response.json();
+    })
+    .then(projectFiles => {
+      const projectsGrid = document.getElementById("projects-grid");
+      if (!projectsGrid) return;
+
+      projectFiles.forEach(project => {
+        const card = document.createElement("div");
+        card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition duration-300 flex flex-col justify-between animate-on-scroll opacity-0 h-full";
+
+        // Membuat elemen badge untuk tech stack secara dinamis
+        const tagsHTML = project.tags.map(tag => {
+          let colorClass = "bg-gray-50 text-gray-600";
+          if (tag === "Laravel") colorClass = "bg-orange-50 text-orange-600";
+          if (tag === "React" || tag === "Express") colorClass = "bg-blue-50 text-blue-600";
+          if (tag === "Tailwind CSS") colorClass = "bg-sky-50 text-sky-600";
+          if (tag === "Node.js") colorClass = "bg-green-50 text-green-600";
+          if (tag === "IoT") colorClass = "bg-red-50 text-red-600";
+
+          return `<span class="text-[11px] font-medium ${colorClass} px-2 py-0.5 rounded-md">${tag}</span>`;
+        }).join("");
+
+        card.innerHTML = `
+          <div>
+              <div class="h-48 w-full bg-gray-200 overflow-hidden relative group">
+                  <img src="${project.image}" alt="${project.title} Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+                  <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                      ${project.category}
+                  </div>
+              </div>
+              <div class="p-6">
+                  <h3 class="text-xl font-bold text-gray-800 mb-1.5">${project.title}</h3>
+                  <p class="text-sm text-gray-600 leading-relaxed mb-4">${project.description}</p>
+                  <div class="flex flex-wrap gap-1.5">${tagsHTML}</div>
+              </div>
+          </div>
+          <div class="p-6 pt-0 flex gap-3">
+              <a href="${project.sourceCode}" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
+                  <i class="fab fa-github"></i> ${project.title === "Smart Garden Dashboard" ? "Repository" : "Source Code"}
+              </a>
+              <a href="${project.liveDemo}" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
+                  <i class="fas fa-external-link-alt text-[10px]"></i> ${project.title === "Smart Garden Dashboard" ? "View Demo" : "Live Demo"}
+              </a>
+          </div>
+        `;
+        projectsGrid.appendChild(card);
+        observer.observe(card); // Aktifkan animasi scroll untuk card proyek yang baru di-inject
+      });
+    })
+    .catch(error => console.error("Error loading projects:", error));
+
   // Flag untuk memastikan sertifikat hanya diproses sekali saat tab dibuka
   let pdfRendered = false;
 
-  // Fungsi filter tab navigasi
+  // Fungsi filter tab navigasi bawah
   function showTab(tab) {
-    // Sembunyikan semua tab konten
     document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
 
-    // Tampilkan tab terpilih
     const activeTab = document.getElementById(tab);
     if (activeTab) {
       activeTab.classList.remove("hidden");
@@ -40,21 +95,18 @@ document.addEventListener("DOMContentLoaded", () => {
         card.classList.remove("opacity-0");
       });
 
-      // Lazy load data sertifikat saat tab diklik
       if (tab === 'sertificate' && !pdfRendered) {
         renderCertificates();
         pdfRendered = true; 
       }
     }
 
-    // Reset style semua tombol navbar filter
     document.querySelectorAll("#btn-skills, #btn-pengalaman, #btn-sertificate")
       .forEach(btn => {
         btn.classList.remove("text-black", "border-black");
         btn.classList.add("text-gray-600", "border-transparent");
       });
 
-    // Aktifkan style tombol yang sedang aktif
     const targetBtn = document.getElementById("btn-" + tab);
     if (targetBtn) {
       targetBtn.classList.remove("text-gray-600", "border-transparent");
@@ -62,7 +114,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Ikat Event Listener ke Tombol HTML
+  // Ikat Event Listener ke Tombol Filter HTML
   const btnSkills = document.getElementById("btn-skills");
   const btnPengalaman = document.getElementById("btn-pengalaman");
   const btnSertificate = document.getElementById("btn-sertificate");
@@ -84,7 +136,6 @@ document.addEventListener("DOMContentLoaded", () => {
       data.forEach(skill => {
         const card = document.createElement("div");
         card.className = "bg-white shadow-md hover:shadow-lg transition rounded-2xl p-5 flex flex-col items-center";
-
         card.innerHTML = `
           <img src="${skill.icon}" alt="${skill.name}" class="w-14 h-14 object-contain mb-3">
           <p class="text-sm font-medium text-gray-700">${skill.name}</p>
@@ -92,7 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(card);
       });
 
-      // Default membuka tab Skills setelah fetch data selesai
       showTab("skills");
     })
     .catch(error => {
@@ -102,12 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // Fungsi merender seluruh data sertifikat
   function renderCertificates() {
-    // Array Data Gabungan (Sertifikat Gambar Statis + Sertifikat PDF)
     const certificateFiles = [
-      // DI SINI: Sertifikat Alibaba Cloud bertipe gambar dikembalikan
-      { url: "assets/sertifikat2.pdf", title: "AlibabaCloudCertifikat", year: "2024", isImage: true, imageSrc: "assets/AlibabaCloudCertifikat.png" },
-      
-      // Daftar sertifikat PDF kamu
+      { url: "assets/skils/AlibabaCloudCertifikat.png", title: "AlibabaCloudCertifikat", year: "2024", isImage: true, imageSrc: "assets/skils/AlibabaCloudCertifikat.png" },
       { url: "assets/pdf/sertifikat MTCNA.pdf", title: "Mikrotik MTCNA", year: "2025", isImage: false },
       { url: "assets/pdf/certificateHTML.pdf", title: "Sertifikat HTML dasar Codepolitan", year: "2024", isImage: false },
       { url: "assets/pdf/Certificate Javascript OOP - CODEPOLITAN.pdf", title: "Certificate Javascript OOP - CODEPOLITAN", year: "2024", isImage: false },
@@ -137,7 +183,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const canvasWrapper = document.createElement("div");
       canvasWrapper.className = "h-48 w-full flex items-center justify-center bg-gray-50 overflow-hidden p-2 border-b border-gray-100 relative z-0"; 
 
-      // Pengecekan: Jika tipe data adalah gambar statis (seperti Alibaba)
       if (file.isImage) {
         const img = document.createElement("img");
         img.src = file.imageSrc;
@@ -145,12 +190,10 @@ document.addEventListener("DOMContentLoaded", () => {
         img.className = "mx-auto max-w-full max-h-full object-cover rounded-md";
         canvasWrapper.appendChild(img);
       } else {
-        // Jika bertipe PDF mentah, gunakan canvas untuk pdf.js
         const canvas = document.createElement("canvas");
         canvas.className = "mx-auto max-w-full max-h-full object-contain"; 
         canvasWrapper.appendChild(canvas);
 
-        // Jalankan render pdf.js di background
         pdfjsLib.getDocument(file.url).promise.then(pdf => {
           pdf.getPage(1).then(page => {
             const viewport = page.getViewport({ scale: 0.4 }); 
@@ -159,10 +202,7 @@ document.addEventListener("DOMContentLoaded", () => {
             canvas.height = viewport.height;
             canvas.width = viewport.width;
 
-            page.render({
-              canvasContext: context,
-              viewport: viewport
-            });
+            page.render({ canvasContext: context, viewport: viewport });
           });
         }).catch(err => console.warn("Gagal memuat preview PDF: " + file.url, err));
       }
@@ -176,9 +216,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const textDiv = document.createElement("div");
       textDiv.className = "p-4 bg-white flex flex-col justify-between flex-grow relative z-10 text-left";
       textDiv.innerHTML = `
-        <p class="font-bold text-gray-800 text-[15px] line-clamp-2 mb-2" title="${file.title}">
-          ${file.title}
-        </p>
+        <p class="font-bold text-gray-800 text-[15px] line-clamp-2 mb-2" title="${file.title}">${file.title}</p>
         <p class="text-gray-500 text-xs font-semibold mt-auto flex items-center gap-1">
           <i class="far fa-calendar-alt"></i> ${file.year}
         </p>
@@ -187,7 +225,6 @@ document.addEventListener("DOMContentLoaded", () => {
       card.appendChild(link);
       card.appendChild(textDiv);
       container.appendChild(card);
-
       observer.observe(card);
     });
   }

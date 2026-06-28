@@ -1,0 +1,20 @@
+[
+    {
+        "title": "FinPredict",
+        "description": "Aplikasi peramalan keuangan berbasis web yang dirancang untuk menganalisis laporan penjualan harian, dashboard interaktif, serta memproyeksikan tren finansial masa depan secara responsif.",
+        "image": "assets/projects/finpredict.png",
+        "category": "Web App",
+        "tags": ["Laravel", "React", "Tailwind CSS", "MySQL"],
+        "sourceCode": "#",
+        "liveDemo": "#"
+    },
+    {
+        "title": "Smart Garden Dashboard",
+        "description": "Proyek sistem monitoring kebun pintar kolaboratif berbasis IoT untuk memantau kelembaban tanah, suhu lingkungan, serta kendali pompa air otomatis secara real-time.",
+        "image": "assets/projects/smartgarden.png",
+        "category": "IoT & Web",
+        "tags": ["Node.js", "Express", "Tailwind CSS", "IoT"],
+        "sourceCode": "#",
+        "liveDemo": "#"
+    }
+]

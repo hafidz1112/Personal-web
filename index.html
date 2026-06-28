@@ -147,71 +147,10 @@
                 <i class="fas fa-folder-open text-yellow-500"></i> Featured Projects
             </h2>
             
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition duration-300 flex flex-col justify-between animate-on-scroll opacity-0 h-full">
-                    <div>
-                        <div class="h-48 w-full bg-gray-200 overflow-hidden relative group">
-                            <img src="assets/projects/finpredict.png" alt="FinPredict Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                                Web App
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-800 mb-1.5">FinPredict</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                                Aplikasi peramalan keuangan berbasis web yang dirancang untuk menganalisis laporan penjualan harian, dashboard interaktif, serta memproyeksikan tren finansial masa depan secara responsif.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5">
-                                <span class="text-[11px] font-medium bg-orange-50 text-orange-600 px-2 py-0.5 rounded-md">Laravel</span>
-                                <span class="text-[11px] font-medium bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md">React</span>
-                                <span class="text-[11px] font-medium bg-sky-50 text-sky-600 px-2 py-0.5 rounded-md">Tailwind CSS</span>
-                                <span class="text-[11px] font-medium bg-gray-50 text-gray-600 px-2 py-0.5 rounded-md">MySQL</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex gap-3">
-                        <a href="#" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
-                            <i class="fab fa-github"></i> Source Code
-                        </a>
-                        <a href="#" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
-                            <i class="fas fa-external-link-alt text-[10px]"></i> Live Demo
-                        </a>
-                    </div>
-                </div>
-
-                <div class="bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition duration-300 flex flex-col justify-between animate-on-scroll opacity-0 h-full">
-                    <div>
-                        <div class="h-48 w-full bg-gray-200 overflow-hidden relative group">
-                            <img src="assets/projects/smartgarden.png" alt="Smart Garden Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
-                            <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                                IoT & Web
-                            </div>
-                        </div>
-                        <div class="p-6">
-                            <h3 class="text-xl font-bold text-gray-800 mb-1.5">Smart Garden Dashboard</h3>
-                            <p class="text-sm text-gray-600 leading-relaxed mb-4">
-                                Proyek sistem monitoring kebun pintar kolaboratif berbasis IoT untuk memantau kelembaban tanah, suhu lingkungan, serta kendali pompa air otomatis secara real-time.
-                            </p>
-                            <div class="flex flex-wrap gap-1.5">
-                                <span class="text-[11px] font-medium bg-green-50 text-green-600 px-2 py-0.5 rounded-md">Node.js</span>
-                                <span class="text-[11px] font-medium bg-blue-50 text-blue-600 px-2 py-0.5 rounded-md">Express</span>
-                                <span class="text-[11px] font-medium bg-sky-50 text-sky-600 px-2 py-0.5 rounded-md">Tailwind CSS</span>
-                                <span class="text-[11px] font-medium bg-red-50 text-red-600 px-2 py-0.5 rounded-md">IoT</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="p-6 pt-0 flex gap-3">
-                        <a href="#" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
-                            <i class="fab fa-github"></i> Repository
-                        </a>
-                        <a href="#" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
-                            <i class="fas fa-external-link-alt text-[10px]"></i> View Demo
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 gap-8"></div>
         </div>
     </section>
+
     <section class="w-full bg-gradient-to-b from-white to-gray-50 py-16" id="skill">
         <div class="max-w-5xl mx-auto px-6">
             <div class="flex justify-center gap-2 px-[50px] border-b pb-4 mb-10">
