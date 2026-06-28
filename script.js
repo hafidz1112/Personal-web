@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const btn = document.getElementById("menu-btn");
   const menu = document.getElementById("menu");
 
-  // toggle menu navbar atas
+  // Toggle menu navbar mobile
   btn.addEventListener("click", () => {
     menu.classList.toggle("hidden");
   });
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", () => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         entry.target.classList.add("animate__animated", "animate__fadeInUp");
-        entry.target.classList.remove("opacity-0"); // Pastikan opacity terbuka saat terdeteksi
+        entry.target.classList.remove("opacity-0"); 
         observer.unobserve(entry.target); 
       }
     });
@@ -21,32 +21,40 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animatedElements.forEach(el => observer.observe(el));
 
-  // fungsi filter bawah
+  // Flag untuk memastikan sertifikat hanya diproses sekali saat tab dibuka
+  let pdfRendered = false;
+
+  // Fungsi filter tab navigasi
   function showTab(tab) {
-    // sembunyikan semua tab
+    // Sembunyikan semua tab konten
     document.querySelectorAll(".tab-content").forEach(el => el.classList.add("hidden"));
 
-    // tampilkan tab terpilih
+    // Tampilkan tab terpilih
     const activeTab = document.getElementById(tab);
     if (activeTab) {
       activeTab.classList.remove("hidden");
       
-      // TRICK UNTUK MOBILE: Picu ulang animasi elemen di dalam tab yang baru dibuka
       const cardsInTab = activeTab.querySelectorAll(".animate-on-scroll, .opacity-0");
       cardsInTab.forEach(card => {
         card.classList.add("animate__animated", "animate__fadeInUp");
         card.classList.remove("opacity-0");
       });
+
+      // Lazy load data sertifikat saat tab diklik
+      if (tab === 'sertificate' && !pdfRendered) {
+        renderCertificates();
+        pdfRendered = true; 
+      }
     }
 
-    // reset style semua tombol navbar filter
+    // Reset style semua tombol navbar filter
     document.querySelectorAll("#btn-skills, #btn-pengalaman, #btn-sertificate")
       .forEach(btn => {
         btn.classList.remove("text-black", "border-black");
         btn.classList.add("text-gray-600", "border-transparent");
       });
 
-    // aktifkan tombol sesuai tab
+    // Aktifkan style tombol yang sedang aktif
     const targetBtn = document.getElementById("btn-" + tab);
     if (targetBtn) {
       targetBtn.classList.remove("text-gray-600", "border-transparent");
@@ -54,10 +62,16 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // bikin global biar bisa dipanggil dari onclick di HTML
-  window.showTab = showTab;
+  // Ikat Event Listener ke Tombol HTML
+  const btnSkills = document.getElementById("btn-skills");
+  const btnPengalaman = document.getElementById("btn-pengalaman");
+  const btnSertificate = document.getElementById("btn-sertificate");
 
-  // load skills.json
+  if (btnSkills) btnSkills.addEventListener("click", () => showTab("skills"));
+  if (btnPengalaman) btnPengalaman.addEventListener("click", () => showTab("pengalaman"));
+  if (btnSertificate) btnSertificate.addEventListener("click", () => showTab("sertificate"));
+
+  // Load data skills.json secara asinkronus
   fetch("skills.json")
     .then(response => {
       if (!response.ok) throw new Error("Gagal load skills.json");
@@ -78,52 +92,80 @@ document.addEventListener("DOMContentLoaded", () => {
         container.appendChild(card);
       });
 
-      // Default buka Skills setelah fetch data selesai
+      // Default membuka tab Skills setelah fetch data selesai
       showTab("skills");
     })
     .catch(error => {
       console.error("Error loading skills:", error);
-      showTab("skills"); // Fallback jika fetch gagal
+      showTab("skills"); 
     });
   
-  // Array Data PDF (Sudah diperbaiki dari double koma ',,')
-  const pdfFiles = [
-    { url: "assets/pdf/sertifikat MTCNA.pdf", title: "Mikrotik MTCNA", year: "2025" },
-    { url: "assets/pdf/certificateHTML.pdf", title: "Sertifikat HTML dasar Codepolitan", year: "2024" },
-    { url: "assets/pdf/Certificate Javascript OOP - CODEPOLITAN.pdf", title: "Certificate Javascript OOP - CODEPOLITAN", year: "2024" },
-    { url: "assets/pdf/Certificate AjaX dan API - CODEPOLITAN.pdf", title: "Certificate AjaX dan API - CODEPOLITAN", year: "2024" },
-    { url: "assets/pdf/Certificate MogoDB- CODEPOLITAN.pdf", title: "Certificate MogoDB- CODEPOLITAN", year: "2024" },
-    { url: "assets/pdf/Certificate Studi Kasus - CODEPOLITAN.pdf", title: "Certificate Studi Kasus - CODEPOLITAN", year: "2024" },
-    { url: "assets/pdf/Belajar Back-End Pemula dengan JavaScript.pdf", title: "Belajar Back-End Pemula dengan JavaScript", year: "2026" },
-    { url: "assets/pdf/Belajar Fundamental Back-End dengan JavaScript.pdf", title: "Belajar Fundamental Back-End dengan JavaScript", year: "2026" },
-    { url: "assets/pdf/Belajar Membuat Aplikasi Web dengan React.pdf", title: "Belajar Membuat Aplikasi Web dengan React", year: "2026" },
-    { url: "assets/pdf/Belajar Fundamental Aplikasi Web dengan React.pdf", title: "Belajar Fundamental Aplikasi Web dengan React", year: "2024" },
-    { url: "assets/pdf/Belajar Dasar Pemrograman JavaScript.pdf", title: "Belajar Dasar Pemrograman JavaScript", year: "2026" },
-    { url: "assets/pdf/Belajar Membuat Front-End Web untuk Pemula.pdf", title: "Belajar Membuat Front-End Web untuk Pemula", year: "2026" },
-    { url: "assets/pdf/Belajar Dasar Pemrograman Web.pdf", title: "Belajar Dasar Pemrograman Web", year: "2026" },
-    { url: "assets/pdf/AWS.pdf", title: "Belajar Dasar Cloud dan Gen AI di AWS", year: "2024" },
-    { url: "assets/pdf/Pengenalan ke Logika Pemrograman.pdf", title: "Pengenalan ke Logika Pemrograman", year: "2026" },
-    { url: "assets/pdf/Memulai Dasar Pemrograman.pdf", title: "Memulai Dasar Pemrograman untuk Menjadi Pengembang Software", year: "2026" },
-    { url: "assets/pdf/Hack Point-Muhammad_Hafidz.pdf", title: "Hack Point-Muhammad_Hafidz", year: "2024" }
-  ];
+  // Fungsi merender seluruh data sertifikat
+  function renderCertificates() {
+    // Array Data Gabungan (Sertifikat Gambar Statis + Sertifikat PDF)
+    const certificateFiles = [
+      // DI SINI: Sertifikat Alibaba Cloud bertipe gambar dikembalikan
+      { url: "assets/sertifikat2.pdf", title: "AlibabaCloudCertifikat", year: "2024", isImage: true, imageSrc: "assets/AlibabaCloudCertifikat.png" },
+      
+      // Daftar sertifikat PDF kamu
+      { url: "assets/pdf/sertifikat MTCNA.pdf", title: "Mikrotik MTCNA", year: "2025", isImage: false },
+      { url: "assets/pdf/certificateHTML.pdf", title: "Sertifikat HTML dasar Codepolitan", year: "2024", isImage: false },
+      { url: "assets/pdf/Certificate Javascript OOP - CODEPOLITAN.pdf", title: "Certificate Javascript OOP - CODEPOLITAN", year: "2024", isImage: false },
+      { url: "assets/pdf/Certificate AjaX dan API - CODEPOLITAN.pdf", title: "Certificate AjaX dan API - CODEPOLITAN", year: "2024", isImage: false },
+      { url: "assets/pdf/Certificate MogoDB- CODEPOLITAN.pdf", title: "Certificate MogoDB- CODEPOLITAN", year: "2024", isImage: false },
+      { url: "assets/pdf/Certificate Studi Kasus - CODEPOLITAN.pdf", title: "Certificate Studi Kasus - CODEPOLITAN", year: "2024", isImage: false },
+      { url: "assets/pdf/Belajar Back-End Pemula dengan JavaScript.pdf", title: "Belajar Back-End Pemula dengan JavaScript", year: "2026", isImage: false },
+      { url: "assets/pdf/Belajar Fundamental Back-End dengan JavaScript.pdf", title: "Belajar Fundamental Back-End dengan JavaScript", year: "2026", isImage: false },
+      { url: "assets/pdf/Belajar Membuat Aplikasi Web dengan React.pdf", title: "Belajar Membuat Aplikasi Web dengan React", year: "2026", isImage: false },
+      { url: "assets/pdf/Belajar Fundamental Aplikasi Web dengan React.pdf", title: "Belajar Fundamental Aplikasi Web dengan React", year: "2024", isImage: false },
+      { url: "assets/pdf/Belajar Dasar Pemrograman JavaScript.pdf", title: "Belajar Dasar Pemrograman JavaScript", year: "2026", isImage: false },
+      { url: "assets/pdf/Belajar Membuat Front-End Web untuk Pemula.pdf", title: "Belajar Membuat Front-End Web untuk Pemula", year: "2026", isImage: false },
+      { url: "assets/pdf/Belajar Dasar Pemrograman Web.pdf", title: "Belajar Dasar Pemrograman Web", year: "2026", isImage: false },
+      { url: "assets/pdf/AWS.pdf", title: "Belajar Dasar Cloud dan Gen AI di AWS", year: "2024", isImage: false },
+      { url: "assets/pdf/Pengenalan ke Logika Pemrograman.pdf", title: "Pengenalan ke Logika Pemrograman", year: "2026", isImage: false },
+      { url: "assets/pdf/Memulai Dasar Pemrograman.pdf", title: "Memulai Dasar Pemrograman untuk Menjadi Pengembang Software", year: "2026", isImage: false },
+      { url: "assets/pdf/Hack Point-Muhammad_Hafidz.pdf", title: "Hack Point-Muhammad_Hafidz", year: "2024", isImage: false }
+    ];
 
-  const container = document.getElementById("pdf-grid");
+    const container = document.getElementById("pdf-grid");
+    if (!container) return;
 
-  if (container) {
-    pdfFiles.forEach((file) => {
-      // 1. Buat Card Utama dengan layout Flexbox vertikal yang solid
+    certificateFiles.forEach((file) => {
       const card = document.createElement("div");
-      card.className = "flex flex-col bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300 border border-gray-100 animate-on-scroll opacity-0 h-full";
+      card.className = "flex flex-col bg-white shadow-md rounded-xl overflow-hidden hover:shadow-lg transition duration-300 border border-gray-100 animate-on-scroll h-full";
 
-      // 2. Canvas buat thumbnail PDF
-      const canvas = document.createElement("canvas");
-      // max-w-full dan max-h-full memastikan gambar PDF tidak meluber keluar box
-      canvas.className = "mx-auto max-w-full max-h-full object-contain"; 
-
-      // 3. Wrapper area preview atas (tetap abu-abu terang sebagai ruang gambar)
       const canvasWrapper = document.createElement("div");
       canvasWrapper.className = "h-48 w-full flex items-center justify-center bg-gray-50 overflow-hidden p-2 border-b border-gray-100 relative z-0"; 
-      canvasWrapper.appendChild(canvas);
+
+      // Pengecekan: Jika tipe data adalah gambar statis (seperti Alibaba)
+      if (file.isImage) {
+        const img = document.createElement("img");
+        img.src = file.imageSrc;
+        img.alt = file.title;
+        img.className = "mx-auto max-w-full max-h-full object-cover rounded-md";
+        canvasWrapper.appendChild(img);
+      } else {
+        // Jika bertipe PDF mentah, gunakan canvas untuk pdf.js
+        const canvas = document.createElement("canvas");
+        canvas.className = "mx-auto max-w-full max-h-full object-contain"; 
+        canvasWrapper.appendChild(canvas);
+
+        // Jalankan render pdf.js di background
+        pdfjsLib.getDocument(file.url).promise.then(pdf => {
+          pdf.getPage(1).then(page => {
+            const viewport = page.getViewport({ scale: 0.4 }); 
+            const context = canvas.getContext('2d');
+            
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            page.render({
+              canvasContext: context,
+              viewport: viewport
+            });
+          });
+        }).catch(err => console.warn("Gagal memuat preview PDF: " + file.url, err));
+      }
 
       const link = document.createElement("a");
       link.href = file.url;
@@ -131,7 +173,6 @@ document.addEventListener("DOMContentLoaded", () => {
       link.className = "block w-full hover:opacity-90 transition"; 
       link.appendChild(canvasWrapper);
 
-      // 4. Pembungkus Teks Bawah (Diberi bg-white solid dan flex-grow agar tingginya seragam)
       const textDiv = document.createElement("div");
       textDiv.className = "p-4 bg-white flex flex-col justify-between flex-grow relative z-10 text-left";
       textDiv.innerHTML = `
@@ -143,31 +184,11 @@ document.addEventListener("DOMContentLoaded", () => {
         </p>
       `;
 
-      // susun struktur card
       card.appendChild(link);
       card.appendChild(textDiv);
       container.appendChild(card);
 
-      // Daftarkan card baru ke observer
       observer.observe(card);
-
-      // Render PDF ke thumbnail canvas
-      const loadingTask = pdfjsLib.getDocument(file.url);
-      loadingTask.promise.then(pdf => {
-        pdf.getPage(1).then(page => {
-          // Naikkan scale sedikit agar text di preview PDF terlihat lebih tajam
-          const viewport = page.getViewport({ scale: 0.5 }); 
-          const context = canvas.getContext('2d');
-          
-          canvas.height = viewport.height;
-          canvas.width = viewport.width;
-
-          page.render({
-            canvasContext: context,
-            viewport: viewport
-          });
-        });
-      }).catch(err => console.warn("Gagal memuat preview PDF: " + file.url, err));
     });
   }
 });

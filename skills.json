@@ -1,15 +1,15 @@
 [
-    { "name": "HTML", "icon": "assets/html_logo.png" },
-    { "name": "CSS", "icon": "assets/css.jpeg" },
-    { "name": "JavaScript", "icon": "assets/js.jpeg" },
-    { "name": "PHP", "icon": "assets/php.jpeg" },
-    { "name": "Laravel", "icon": "assets/laravel.png" },
-    { "name": "Tailwind", "icon": "assets/taillwind.png" },
-    { "name": "Boostrap", "icon": "assets/boostrap.png" },
-    { "name": "Next Js", "icon": "assets/next.png" },
-    { "name": "React", "icon": "assets/react.png" },
-    { "name": "MySql", "icon": "assets/mysql.png" },
-    { "name": "Python", "icon": "assets/python.png" },
-    { "name": "Git", "icon": "assets/git.png" },
-    { "name": "Linux", "icon": "assets/linux.png"}
+    { "name": "HTML", "icon": "assets/skils/html_logo.png" },
+    { "name": "CSS", "icon": "assets/skils/css.jpeg" },
+    { "name": "JavaScript", "icon": "assets/skils/js.jpeg" },
+    { "name": "PHP", "icon": "assets/skils/php.jpeg" },
+    { "name": "Laravel", "icon": "assets/skils/laravel.png" },
+    { "name": "Tailwind", "icon": "assets/skils/taillwind.png" },
+    { "name": "Boostrap", "icon": "assets/skils/boostrap.png" },
+    { "name": "Next Js", "icon": "assets/skils/next.png" },
+    { "name": "React", "icon": "assets/skils/react.png" },
+    { "name": "MySql", "icon": "assets/skils/mysql.png" },
+    { "name": "Python", "icon": "assets/skils/python.png" },
+    { "name": "Git", "icon": "assets/skils/git.png" },
+    { "name": "Linux", "icon": "assets/skils/linux.png"}
 ]
