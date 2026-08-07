@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Semua Project - Muhammad Hafidz Portfolio</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="favicon.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    
+    <style>
+    @keyframes slideDown {
+        0% { transform: translateY(-20px); opacity: 0; }
+        100% { transform: translateY(0); opacity: 1; }
+    }
+    .slide-down {
+        animation: slideDown 0.3s ease-out forwards;
+    }
+    html {
+        scroll-behavior: smooth;
+    }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 min-h-screen flex flex-col">
+    
+    <!-- Navbar Header -->
+    <header class="fixed top-0 left-0 w-full bg-white z-20 shadow-xs border-b border-gray-100">
+        <div class="flex justify-between items-center text-center py-3 lg:py-6 md:px-15 px-10 text-[18px]">
+            <div>
+                <a href="index.html">
+                    <img src="assets/skils/logo.png" class="lg:w-[120px] w-[100px]" alt="Logo">
+                </a>
+            </div>
+
+            <div class="hidden md:flex text-center items-center gap-3">
+                <a href="index.html#home" class="px-4 font-semibold text-gray-700 hover:text-black transition">Home</a>
+                <a href="index.html#profil" class="px-4 font-semibold text-gray-700 hover:text-black transition">Profil</a>
+                <a href="projects.html" class="px-4 font-semibold text-yellow-600 border-b-2 border-yellow-500 pb-0.5">Portfolio & Projects</a>
+                <a href="index.html#skill" class="px-4 font-semibold text-gray-700 hover:text-black transition">Skills & Certs</a>
+                <a href="https://www.instagram.com/mhdhfdz_11/" target="_blank" class="bg-black p-3 rounded text-white text-[15px] hover:bg-gray-800 transition">
+                    @mhdhfdz_11
+                </a>
+                <a href="https://www.linkedin.com/in/muhammad-hafidz-074501277/?locale=en" target="_blank" class="bg-blue-800 p-3 rounded text-white text-[15px] hover:bg-blue-900 transition">
+                    Linkedin
+                </a>
+            </div>
+
+            <button id="menu-btn" aria-label="Toggle Navigation Menu" class="md:hidden focus:outline-none p-2 text-gray-800">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+
+        <div id="menu" class="hidden text-end flex-col space-y-4 px-10 py-4 bg-white shadow-md md:hidden absolute top-15 right-3 w-[200px] drop-shadow-lg rounded-md z-50 slide-down">
+            <a href="index.html#home" class="block font-medium">Home</a>
+            <a href="index.html#profil" class="block font-medium">Profil</a>
+            <a href="projects.html" class="block font-semibold text-yellow-600">Portfolio & Projects</a>
+            <a href="index.html#skill" class="block font-medium">Skills & Certs</a>
+            <a href="https://www.instagram.com/mhdhfdz_11/" target="_blank" class="bg-black p-2 rounded text-white text-[15px] inline-block text-center">
+                @mhdhfdz_11
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content Projects Page -->
+    <main class="flex-grow pt-28 lg:pt-36 pb-20 max-w-6xl mx-auto px-6 w-full">
+        <!-- Header Banner Section -->
+        <div class="mb-10 animate__animated animate__fadeInDown">
+            <a href="index.html#portfolio" class="inline-flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-black mb-4 transition">
+                <i class="fas fa-arrow-left text-xs"></i> Kembali ke Beranda
+            </a>
+            
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-gray-200 pb-8">
+                <div>
+                    <div class="flex items-center gap-3 mb-2">
+                        <h1 class="text-3xl sm:text-5xl font-extrabold text-gray-900" style="font-family: 'Bricolage Grotesque', sans-serif;">
+                            Semua List Project
+                        </h1>
+                        <span id="all-projects-count" class="bg-yellow-500 text-black text-sm font-extrabold px-3 py-1 rounded-full shadow-xs">0</span>
+                    </div>
+                    <p class="text-gray-600 text-base sm:text-lg max-w-2xl">
+                        Kumpulan seluruh karya, aplikasi web, sistem informasi, dan proyek yang telah saya kembangkan.
+                    </p>
+                </div>
+
+                <!-- Search & Filters Container (Shadcn UI Style) -->
+                <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
+                    <!-- Custom Shadcn UI Select Dropdown -->
+                    <div class="relative w-full sm:w-52 shrink-0">
+                        <button type="button" id="shadcn-select-trigger" class="w-full flex items-center justify-between px-3.5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 shadow-xs hover:bg-slate-50 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:border-slate-950 transition cursor-pointer">
+                            <span id="shadcn-select-value">Semua Kategori</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 opacity-50 transition-transform duration-200" id="shadcn-select-arrow">
+                                <path d="m6 9 6 6 6-6"/>
+                            </svg>
+                        </button>
+
+                        <div id="shadcn-select-menu" class="hidden absolute top-full left-0 mt-1.5 w-full bg-white border border-slate-200 rounded-xl shadow-xl p-1 z-30 transition-all duration-150 transform scale-95 opacity-0">
+                            <div class="space-y-0.5">
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-900 bg-slate-100 rounded-lg cursor-pointer flex items-center justify-between" data-value="all">
+                                    <span>Semua Kategori</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon"></i>
+                                </div>
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors" data-value="Web App">
+                                    <span>Web App</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon hidden"></i>
+                                </div>
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors" data-value="Laravel">
+                                    <span>Laravel</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon hidden"></i>
+                                </div>
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors" data-value="React">
+                                    <span>React</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon hidden"></i>
+                                </div>
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors" data-value="Express">
+                                    <span>Express</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon hidden"></i>
+                                </div>
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors" data-value="Tailwind CSS">
+                                    <span>Tailwind CSS</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon hidden"></i>
+                                </div>
+                                <div class="shadcn-option px-3 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-100 hover:text-slate-900 rounded-lg cursor-pointer flex items-center justify-between transition-colors" data-value="MySQL">
+                                    <span>MySQL</span>
+                                    <i class="fas fa-check text-xs text-slate-900 check-icon hidden"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Search Input (Shadcn UI style) -->
+                    <div class="relative w-full sm:w-64">
+                        <input type="text" id="search-all-projects" placeholder="Cari project atau tech stack..." class="w-full pl-9 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs sm:text-sm font-medium text-slate-900 placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-slate-950 focus:border-slate-950 shadow-xs transition">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-400 h-4 w-4 pointer-events-none">
+                            <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grid Container Semua Project -->
+        <div id="all-projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
+
+        <!-- No Projects Found Message -->
+        <div id="no-projects-found" class="hidden text-center py-20 text-gray-500 bg-white rounded-3xl border border-gray-100 p-8 shadow-xs">
+            <i class="fas fa-folder-open text-5xl text-gray-300 mb-4 block"></i>
+            <h3 class="text-xl font-bold text-gray-700 mb-1">Project Tidak Ditemukan</h3>
+            <p class="text-sm text-gray-500">Tidak ada project yang cocok dengan pencarian atau kategori yang dipilih.</p>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-gray-200 py-8 text-center text-sm text-gray-500">
+        <p>© 2026 Muhammad Hafidz. All rights reserved.</p>
+    </footer>
+
+    <!-- Modal Detail Project (Dialog Khusus Detail Project) -->
+    <div id="project-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none">
+        <div id="project-modal-card" class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transition-all transform scale-95 duration-300 relative border border-gray-100 flex flex-col">
+            <!-- Close Button -->
+            <button id="close-modal-btn" aria-label="Close modal" class="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black text-white w-9 h-9 rounded-full flex items-center justify-center transition duration-200 shadow-md cursor-pointer">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Modal Image Header -->
+            <div class="relative h-48 sm:h-80 w-full bg-gray-900 shrink-0 flex items-center justify-center overflow-hidden">
+                <img id="modal-img" src="" alt="Project Image" class="w-full h-full object-contain transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+                <div id="modal-category" class="absolute bottom-4 left-6 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                    Category
+                </div>
+            </div>
+
+            <!-- Thumbnail Gallery (Multi-image support) -->
+            <div id="modal-gallery-container" class="px-6 pt-4 hidden">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Galeri Tangkapan Layar</p>
+                <div id="modal-gallery-thumbnails" class="flex gap-3 overflow-x-auto pb-2"></div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6 sm:p-8 flex-grow">
+                <h2 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3" style="font-family: 'Bricolage Grotesque', sans-serif;">
+                    Project Title
+                </h2>
+                
+                <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
+
+                <div class="space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base mb-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Deskripsi Proyek</h4>
+                        <p id="modal-description" class="text-gray-700"></p>
+                    </div>
+
+                    <div id="modal-features-container" class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fas fa-star text-yellow-500"></i> Fitur Utama
+                        </h4>
+                        <ul id="modal-features" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600"></ul>
+                    </div>
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
+                    <a id="modal-source-btn" href="#" target="_blank" class="flex-1 py-3 px-4 text-center text-sm font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-2">
+                        <i class="fab fa-github text-base"></i> View Source Code
+                    </a>
+                    <a id="modal-demo-btn" href="#" target="_blank" class="flex-1 py-3 px-4 text-center text-sm font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fas fa-external-link-alt text-xs"></i> Open Live Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

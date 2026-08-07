@@ -140,8 +140,192 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") closeProjectModal();
+    if (e.key === "Escape") {
+      if (modal && !modal.classList.contains("opacity-0")) {
+        closeProjectModal();
+      }
+    }
   });
+
+  // ========================================================
+  // LOGIKA RENDER & FILTER UNTUK HALAMAN PROYEK (PROJECTS.HTML & INDEX.HTML)
+  // ========================================================
+  const searchInput = document.getElementById("search-all-projects");
+  const allProjectsGrid = document.getElementById("all-projects-grid");
+  const allProjectsCount = document.getElementById("all-projects-count");
+  const noProjectsFound = document.getElementById("no-projects-found");
+
+  let activeCategory = "all";
+
+  function createProjectCard(project, animateScroll = true) {
+    if (!project.id) {
+      project.id = project.title.toLowerCase().replace(/[^a-z0-9]/g, "-");
+    }
+
+    const card = document.createElement("div");
+    card.className = `bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full group cursor-pointer ${animateScroll ? 'animate-on-scroll opacity-0' : ''}`;
+
+    const tagsHTML = (project.tags || []).map(tag => {
+      let colorClass = "bg-gray-50 text-gray-600";
+      if (tag === "Laravel") colorClass = "bg-orange-50 text-orange-600";
+      if (tag === "React" || tag === "Express") colorClass = "bg-blue-50 text-blue-600";
+      if (tag === "Tailwind CSS") colorClass = "bg-sky-50 text-sky-600";
+      if (tag === "Node.js") colorClass = "bg-green-50 text-green-600";
+      if (tag === "IoT") colorClass = "bg-red-50 text-red-600";
+
+      return `<span class="text-[11px] font-medium ${colorClass} px-2 py-0.5 rounded-md">${tag}</span>`;
+    }).join("");
+
+    card.innerHTML = `
+      <div>
+          <div class="h-48 w-full bg-gray-900 overflow-hidden relative group-hover:brightness-95 transition duration-300">
+              <img src="${project.image}" alt="${project.title} Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
+              <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+                  ${project.category || 'Web App'}
+              </div>
+              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
+                  <span class="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+                      <i class="fas fa-search-plus"></i> Lihat Detail
+                  </span>
+              </div>
+          </div>
+          <div class="p-6">
+              <h3 class="text-xl font-bold text-gray-800 mb-1.5 group-hover:text-yellow-600 transition duration-200">${project.title}</h3>
+              <p class="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">${project.description}</p>
+              <div class="flex flex-wrap gap-1.5">${tagsHTML}</div>
+          </div>
+      </div>
+      <div class="p-6 pt-0 flex gap-2">
+          <button class="open-detail-btn flex-1 py-2 text-center text-xs font-semibold bg-gray-900 text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shadow-xs">
+              <i class="fas fa-info-circle"></i> Lihat Detail
+          </button>
+          <a href="${project.sourceCode || '#'}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Source Code">
+              <i class="fab fa-github text-sm"></i>
+          </a>
+          <a href="${project.liveDemo || '#'}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-yellow-500 text-black hover:bg-yellow-400 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Live Demo">
+              <i class="fas fa-external-link-alt text-[11px]"></i>
+          </a>
+      </div>
+    `;
+
+    card.addEventListener("click", () => {
+      openProjectModal(project);
+    });
+
+    return card;
+  }
+
+  // ========================================================
+  // SHADCN UI CUSTOM SELECT DROPDOWN LOGIC
+  // ========================================================
+  const selectTrigger = document.getElementById("shadcn-select-trigger");
+  const selectMenu = document.getElementById("shadcn-select-menu");
+  const selectValue = document.getElementById("shadcn-select-value");
+  const selectArrow = document.getElementById("shadcn-select-arrow");
+  const selectOptions = document.querySelectorAll(".shadcn-option");
+
+  function toggleShadcnSelect() {
+    if (!selectMenu) return;
+    const isHidden = selectMenu.classList.contains("hidden");
+    if (isHidden) {
+      selectMenu.classList.remove("hidden");
+      setTimeout(() => {
+        selectMenu.classList.remove("scale-95", "opacity-0");
+        selectMenu.classList.add("scale-100", "opacity-100");
+      }, 10);
+      selectArrow?.classList.add("rotate-180");
+    } else {
+      closeShadcnSelect();
+    }
+  }
+
+  function closeShadcnSelect() {
+    if (!selectMenu || selectMenu.classList.contains("hidden")) return;
+    selectMenu.classList.remove("scale-100", "opacity-100");
+    selectMenu.classList.add("scale-95", "opacity-0");
+    selectArrow?.classList.remove("rotate-180");
+    setTimeout(() => {
+      selectMenu.classList.add("hidden");
+    }, 150);
+  }
+
+  if (selectTrigger) {
+    selectTrigger.addEventListener("click", (e) => {
+      e.stopPropagation();
+      toggleShadcnSelect();
+    });
+  }
+
+  selectOptions.forEach(opt => {
+    opt.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const val = opt.getAttribute("data-value");
+      const text = opt.querySelector("span")?.textContent || "Semua Kategori";
+
+      activeCategory = val;
+      if (selectValue) selectValue.textContent = text;
+
+      // Update checkmark state
+      selectOptions.forEach(o => {
+        const check = o.querySelector(".check-icon");
+        if (o === opt) {
+          o.classList.add("bg-slate-100", "text-slate-900");
+          o.classList.remove("text-slate-700");
+          check?.classList.remove("hidden");
+        } else {
+          o.classList.remove("bg-slate-100", "text-slate-900");
+          o.classList.add("text-slate-700");
+          check?.classList.add("hidden");
+        }
+      });
+
+      closeShadcnSelect();
+      renderAllProjectsGrid();
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (selectMenu && !selectMenu.contains(e.target) && e.target !== selectTrigger) {
+      closeShadcnSelect();
+    }
+  });
+
+  function renderAllProjectsGrid() {
+    if (!allProjectsGrid) return;
+    const query = (searchInput?.value || "").toLowerCase().trim();
+    const selectedCategory = activeCategory;
+
+    const filtered = loadedProjects.filter(project => {
+      const matchCat = selectedCategory === "all" || 
+                       (project.category && project.category.toLowerCase() === selectedCategory.toLowerCase()) || 
+                       (project.tags && project.tags.some(t => t.toLowerCase() === selectedCategory.toLowerCase()));
+      const matchQuery = !query || 
+                        project.title.toLowerCase().includes(query) || 
+                        project.description.toLowerCase().includes(query) || 
+                        (project.tags && project.tags.some(t => t.toLowerCase().includes(query)));
+      return matchCat && matchQuery;
+    });
+
+    if (allProjectsCount) {
+      allProjectsCount.textContent = filtered.length;
+    }
+
+    allProjectsGrid.innerHTML = "";
+
+    if (filtered.length === 0) {
+      noProjectsFound?.classList.remove("hidden");
+    } else {
+      noProjectsFound?.classList.add("hidden");
+      filtered.forEach(project => {
+        const card = createProjectCard(project, false);
+        allProjectsGrid.appendChild(card);
+      });
+    }
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", renderAllProjectsGrid);
+  }
 
   function checkUrlHashForProject() {
     const hash = window.location.hash;
@@ -167,71 +351,23 @@ document.addEventListener("DOMContentLoaded", () => {
     })
     .then(projectFiles => {
       loadedProjects = projectFiles;
+
+      // Render di index.html jika #projects-grid ada
       const projectsGrid = document.getElementById("projects-grid");
-      if (!projectsGrid) return;
-
-      projectFiles.forEach((project, index) => {
-        if (!project.id) {
-          project.id = project.title.toLowerCase().replace(/[^a-z0-9]/g, "-");
-        }
-
-        const card = document.createElement("div");
-        card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between animate-on-scroll opacity-0 h-full group cursor-pointer";
-
-        // Membuat elemen badge untuk tech stack secara dinamis
-        const tagsHTML = project.tags.map(tag => {
-          let colorClass = "bg-gray-50 text-gray-600";
-          if (tag === "Laravel") colorClass = "bg-orange-50 text-orange-600";
-          if (tag === "React" || tag === "Express") colorClass = "bg-blue-50 text-blue-600";
-          if (tag === "Tailwind CSS") colorClass = "bg-sky-50 text-sky-600";
-          if (tag === "Node.js") colorClass = "bg-green-50 text-green-600";
-          if (tag === "IoT") colorClass = "bg-red-50 text-red-600";
-
-          return `<span class="text-[11px] font-medium ${colorClass} px-2 py-0.5 rounded-md">${tag}</span>`;
-        }).join("");
-
-        card.innerHTML = `
-          <div>
-              <div class="h-48 w-full bg-gray-900 overflow-hidden relative group-hover:brightness-95 transition duration-300">
-                  <img src="${project.image}" alt="${project.title} Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                  <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
-                      ${project.category}
-                  </div>
-                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
-                      <span class="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-                          <i class="fas fa-search-plus"></i> Lihat Detail
-                      </span>
-                  </div>
-              </div>
-              <div class="p-6">
-                  <h3 class="text-xl font-bold text-gray-800 mb-1.5 group-hover:text-yellow-600 transition duration-200">${project.title}</h3>
-                  <p class="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">${project.description}</p>
-                  <div class="flex flex-wrap gap-1.5">${tagsHTML}</div>
-              </div>
-          </div>
-          <div class="p-6 pt-0 flex gap-2">
-              <button class="open-detail-btn flex-1 py-2 text-center text-xs font-semibold bg-gray-900 text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shadow-xs">
-                  <i class="fas fa-info-circle"></i> Lihat Detail
-              </button>
-              <a href="${project.sourceCode}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Source Code">
-                  <i class="fab fa-github text-sm"></i>
-              </a>
-              <a href="${project.liveDemo}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-yellow-500 text-black hover:bg-yellow-400 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Live Demo">
-                  <i class="fas fa-external-link-alt text-[11px]"></i>
-              </a>
-          </div>
-        `;
-
-        // Event listener saat card atau tombol detail diklik
-        card.addEventListener("click", () => {
-          openProjectModal(project);
+      if (projectsGrid) {
+        projectFiles.forEach((project) => {
+          const card = createProjectCard(project, true);
+          projectsGrid.appendChild(card);
+          observer.observe(card);
         });
+      }
 
-        projectsGrid.appendChild(card);
-        observer.observe(card);
-      });
+      // Render di projects.html jika #all-projects-grid ada
+      if (allProjectsGrid) {
+        renderAllProjectsGrid();
+      }
 
-      // Cek apakah ada Hash URL saat pertama kali di-load (misal: index.html#project-daily-sales-report)
+      // Cek apakah ada Hash URL saat pertama kali di-load
       checkUrlHashForProject();
     })
     .catch(error => console.error("Error loading projects:", error));
