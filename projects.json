@@ -1,19 +1,19 @@
 [
     {
-        "title": "FinPredict",
-        "description": "Aplikasi peramalan keuangan berbasis web yang dirancang untuk menganalisis laporan penjualan harian, dashboard interaktif, serta memproyeksikan tren finansial masa depan secara responsif.",
-        "image": "assets/projects/finpredict.png",
+        "title": "Daily Sales Report - Pertamina Retail",
+        "description": "Aplikasi berbasis web untuk mengelola, mencatat, dan menganalisis laporan penjualan harian secara terstruktur, terintegrasi, dan responsif.",
+        "image": "assets/projects/daily-sales-report.png",
         "category": "Web App",
         "tags": ["Laravel", "React", "Tailwind CSS", "MySQL"],
         "sourceCode": "#",
         "liveDemo": "#"
     },
     {
-        "title": "Smart Garden Dashboard",
-        "description": "Proyek sistem monitoring kebun pintar kolaboratif berbasis IoT untuk memantau kelembaban tanah, suhu lingkungan, serta kendali pompa air otomatis secara real-time.",
-        "image": "assets/projects/smartgarden.png",
-        "category": "IoT & Web",
-        "tags": ["Node.js", "Express", "Tailwind CSS", "IoT"],
+        "title": "Library UMC",
+        "description": "Sistem informasi perpustakaan berbasis web untuk manajemen katalog buku, peminjaman, pengembalian, serta pencatatan riwayat transaksi anggota.",
+        "image": "assets/projects/library-umc.png",
+        "category": "Web App",
+        "tags": ["Laravel", "React", "Tailwind CSS", "MySQL"],
         "sourceCode": "#",
         "liveDemo": "#"
     }
