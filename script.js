@@ -22,20 +22,161 @@ document.addEventListener("DOMContentLoaded", () => {
   animatedElements.forEach(el => observer.observe(el));
 
   // ========================================================
-  // LOGIKA AMBIL DATA PORTFOLIO DARI FILE PROJECTS.JSON
+  // LOGIKA MODAL DETAIL PROJECT & AMBIL DATA PROJECTS.JSON
   // ========================================================
+  const modal = document.getElementById("project-modal");
+  const modalCard = document.getElementById("project-modal-card");
+  const closeModalBtn = document.getElementById("close-modal-btn");
+  let loadedProjects = [];
+
+  function openProjectModal(project, updateHash = true) {
+    if (!modal) return;
+    
+    document.getElementById("modal-img").src = project.image || "";
+    document.getElementById("modal-img").alt = project.title;
+    document.getElementById("modal-category").textContent = project.category || "Web App";
+    document.getElementById("modal-title").textContent = project.title;
+    document.getElementById("modal-description").textContent = project.longDescription || project.description;
+
+    // Render tags dinamis di modal
+    const modalTags = document.getElementById("modal-tags");
+    if (modalTags) {
+      modalTags.innerHTML = (project.tags || []).map(tag => {
+        let colorClass = "bg-gray-100 text-gray-700";
+        if (tag === "Laravel") colorClass = "bg-orange-100 text-orange-700";
+        if (tag === "React" || tag === "Express") colorClass = "bg-blue-100 text-blue-700";
+        if (tag === "Tailwind CSS") colorClass = "bg-sky-100 text-sky-700";
+        if (tag === "MySQL") colorClass = "bg-emerald-100 text-emerald-700";
+        return `<span class="text-xs font-semibold ${colorClass} px-3 py-1 rounded-full">${tag}</span>`;
+      }).join("");
+    }
+
+    // Render fitur utama jika ada
+    const modalFeaturesContainer = document.getElementById("modal-features-container");
+    const modalFeatures = document.getElementById("modal-features");
+    if (modalFeatures && modalFeaturesContainer) {
+      if (project.features && project.features.length > 0) {
+        modalFeaturesContainer.classList.remove("hidden");
+        modalFeatures.innerHTML = project.features.map(f => `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-500 text-xs"></i> <span>${f}</span></li>`).join("");
+      } else {
+        modalFeaturesContainer.classList.add("hidden");
+      }
+    }
+
+    // Render gallery thumbnails jika ada beberapa gambar
+    const galleryContainer = document.getElementById("modal-gallery-container");
+    const galleryThumbnails = document.getElementById("modal-gallery-thumbnails");
+    const mainImg = document.getElementById("modal-img");
+
+    if (galleryContainer && galleryThumbnails) {
+      if (project.images && project.images.length > 1) {
+        galleryContainer.classList.remove("hidden");
+        galleryThumbnails.innerHTML = project.images.map((imgSrc, idx) => {
+          const isActive = imgSrc === (project.image || project.images[0]);
+          return `
+            <button type="button" class="gallery-thumb-btn shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition duration-200 ${isActive ? 'border-yellow-500 ring-2 ring-yellow-500/50 scale-105' : 'border-transparent opacity-70 hover:opacity-100'}" data-src="${imgSrc}">
+              <img src="${imgSrc}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
+            </button>
+          `;
+        }).join("");
+
+        galleryThumbnails.querySelectorAll(".gallery-thumb-btn").forEach(btn => {
+          btn.addEventListener("click", () => {
+            const newSrc = btn.getAttribute("data-src");
+            if (mainImg && newSrc) {
+              mainImg.src = newSrc;
+              galleryThumbnails.querySelectorAll(".gallery-thumb-btn").forEach(b => {
+                b.classList.remove("border-yellow-500", "ring-2", "ring-yellow-500/50", "scale-105");
+                b.classList.add("border-transparent", "opacity-70");
+              });
+              btn.classList.remove("border-transparent", "opacity-70");
+              btn.classList.add("border-yellow-500", "ring-2", "ring-yellow-500/50", "scale-105");
+            }
+          });
+        });
+      } else {
+        galleryContainer.classList.add("hidden");
+      }
+    }
+
+    // Direct link tombol action modal
+    const sourceBtn = document.getElementById("modal-source-btn");
+    const demoBtn = document.getElementById("modal-demo-btn");
+    if (sourceBtn) sourceBtn.href = project.sourceCode || "#";
+    if (demoBtn) demoBtn.href = project.liveDemo || "#";
+
+    // Tampilkan Modal dengan Animasi Soft
+    modal.classList.remove("opacity-0", "pointer-events-none");
+    modalCard.classList.remove("scale-95");
+    modalCard.classList.add("scale-100");
+    document.body.classList.add("overflow-hidden");
+
+    // Perbarui URL tanpa reload (ngedirect ke URL hash baru di page yang sama)
+    if (updateHash && project.id) {
+      history.pushState({ projectId: project.id }, "", `#project-${project.id}`);
+    }
+  }
+
+  function closeProjectModal(updateHash = true) {
+    if (!modal) return;
+    modal.classList.add("opacity-0", "pointer-events-none");
+    modalCard.classList.remove("scale-100");
+    modalCard.classList.add("scale-95");
+    document.body.classList.remove("overflow-hidden");
+
+    if (updateHash && window.location.hash.startsWith("#project-")) {
+      history.pushState(null, "", window.location.pathname + window.location.search + "#portfolio");
+    }
+  }
+
+  if (closeModalBtn) {
+    closeModalBtn.addEventListener("click", () => closeProjectModal());
+  }
+
+  if (modal) {
+    modal.addEventListener("click", (e) => {
+      if (e.target === modal) closeProjectModal();
+    });
+  }
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") closeProjectModal();
+  });
+
+  function checkUrlHashForProject() {
+    const hash = window.location.hash;
+    if (hash && hash.startsWith("#project-")) {
+      const projId = hash.replace("#project-", "");
+      const found = loadedProjects.find(p => p.id === projId || p.title.toLowerCase().replace(/[^a-z0-9]/g, "-") === projId);
+      if (found) {
+        openProjectModal(found, false);
+      }
+    } else {
+      if (modal && !modal.classList.contains("opacity-0")) {
+        closeProjectModal(false);
+      }
+    }
+  }
+
+  window.addEventListener("popstate", checkUrlHashForProject);
+
   fetch("projects.json")
     .then(response => {
       if (!response.ok) throw new Error("Gagal memuat projects.json");
       return response.json();
     })
     .then(projectFiles => {
+      loadedProjects = projectFiles;
       const projectsGrid = document.getElementById("projects-grid");
       if (!projectsGrid) return;
 
-      projectFiles.forEach(project => {
+      projectFiles.forEach((project, index) => {
+        if (!project.id) {
+          project.id = project.title.toLowerCase().replace(/[^a-z0-9]/g, "-");
+        }
+
         const card = document.createElement("div");
-        card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-md transition duration-300 flex flex-col justify-between animate-on-scroll opacity-0 h-full";
+        card.className = "bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between animate-on-scroll opacity-0 h-full group cursor-pointer";
 
         // Membuat elemen badge untuk tech stack secara dinamis
         const tagsHTML = project.tags.map(tag => {
@@ -51,30 +192,47 @@ document.addEventListener("DOMContentLoaded", () => {
 
         card.innerHTML = `
           <div>
-              <div class="h-48 w-full bg-gray-200 overflow-hidden relative group">
-                  <img src="${project.image}" alt="${project.title} Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-300">
+              <div class="h-48 w-full bg-gray-900 overflow-hidden relative group-hover:brightness-95 transition duration-300">
+                  <img src="${project.image}" alt="${project.title} Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
                   <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
                       ${project.category}
                   </div>
+                  <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
+                      <span class="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
+                          <i class="fas fa-search-plus"></i> Lihat Detail
+                      </span>
+                  </div>
               </div>
               <div class="p-6">
-                  <h3 class="text-xl font-bold text-gray-800 mb-1.5">${project.title}</h3>
-                  <p class="text-sm text-gray-600 leading-relaxed mb-4">${project.description}</p>
+                  <h3 class="text-xl font-bold text-gray-800 mb-1.5 group-hover:text-yellow-600 transition duration-200">${project.title}</h3>
+                  <p class="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">${project.description}</p>
                   <div class="flex flex-wrap gap-1.5">${tagsHTML}</div>
               </div>
           </div>
-          <div class="p-6 pt-0 flex gap-3">
-              <a href="${project.sourceCode}" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
-                  <i class="fab fa-github"></i> ${project.title === "Smart Garden Dashboard" ? "Repository" : "Source Code"}
+          <div class="p-6 pt-0 flex gap-2">
+              <button class="open-detail-btn flex-1 py-2 text-center text-xs font-semibold bg-gray-900 text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shadow-xs">
+                  <i class="fas fa-info-circle"></i> Lihat Detail
+              </button>
+              <a href="${project.sourceCode}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Source Code">
+                  <i class="fab fa-github text-sm"></i>
               </a>
-              <a href="${project.liveDemo}" target="_blank" class="flex-1 py-2 text-center text-xs font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5">
-                  <i class="fas fa-external-link-alt text-[10px]"></i> ${project.title === "Smart Garden Dashboard" ? "View Demo" : "Live Demo"}
+              <a href="${project.liveDemo}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-yellow-500 text-black hover:bg-yellow-400 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Live Demo">
+                  <i class="fas fa-external-link-alt text-[11px]"></i>
               </a>
           </div>
         `;
+
+        // Event listener saat card atau tombol detail diklik
+        card.addEventListener("click", () => {
+          openProjectModal(project);
+        });
+
         projectsGrid.appendChild(card);
-        observer.observe(card); // Aktifkan animasi scroll untuk card proyek yang baru di-inject
+        observer.observe(card);
       });
+
+      // Cek apakah ada Hash URL saat pertama kali di-load (misal: index.html#project-daily-sales-report)
+      checkUrlHashForProject();
     })
     .catch(error => console.error("Error loading projects:", error));
 

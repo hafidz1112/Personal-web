@@ -202,6 +202,64 @@
         </div>
     </section>
 
+    <!-- Modal Detail Project -->
+    <div id="project-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none">
+        <div id="project-modal-card" class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transition-all transform scale-95 duration-300 relative border border-gray-100 flex flex-col">
+            <!-- Close Button -->
+            <button id="close-modal-btn" aria-label="Close modal" class="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black text-white w-9 h-9 rounded-full flex items-center justify-center transition duration-200 shadow-md">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <!-- Modal Image Header -->
+            <div class="relative h-64 sm:h-80 w-full bg-gray-900 shrink-0">
+                <img id="modal-img" src="" alt="Project Image" class="w-full h-full object-cover transition-all duration-300">
+                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
+                <div id="modal-category" class="absolute bottom-4 left-6 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
+                    Category
+                </div>
+            </div>
+
+            <!-- Thumbnail Gallery (Multi-image support) -->
+            <div id="modal-gallery-container" class="px-6 pt-4 hidden">
+                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Galeri Tangkapan Layar</p>
+                <div id="modal-gallery-thumbnails" class="flex gap-3 overflow-x-auto pb-2"></div>
+            </div>
+
+            <!-- Modal Content -->
+            <div class="p-6 sm:p-8 flex-grow">
+                <h2 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3" style="font-family: 'Bricolage Grotesque', sans-serif;">
+                    Project Title
+                </h2>
+                
+                <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
+
+                <div class="space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base mb-6">
+                    <div>
+                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Deskripsi Proyek</h4>
+                        <p id="modal-description" class="text-gray-700"></p>
+                    </div>
+
+                    <div id="modal-features-container" class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
+                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+                            <i class="fas fa-star text-yellow-500"></i> Fitur Utama
+                        </h4>
+                        <ul id="modal-features" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600"></ul>
+                    </div>
+                </div>
+
+                <!-- Modal Actions -->
+                <div class="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
+                    <a id="modal-source-btn" href="#" target="_blank" class="flex-1 py-3 px-4 text-center text-sm font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-2">
+                        <i class="fab fa-github text-base"></i> View Source Code
+                    </a>
+                    <a id="modal-demo-btn" href="#" target="_blank" class="flex-1 py-3 px-4 text-center text-sm font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm">
+                        <i class="fas fa-external-link-alt text-xs"></i> Open Live Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
