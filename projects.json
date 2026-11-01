@@ -40,5 +40,28 @@
         "tags": [ "React", "Tailwind CSS", "MySQL", "express"],
         "sourceCode": "#",
         "liveDemo": "#"
+    },
+    {
+        "id": "bank-sampah-mekarjaya",
+        "title": "Bank Sampah Desa Mekarjaya",
+        "description": "Sistem informasi inisiatif Bank Sampah Aktif Desa Mekarjaya berbasis pemilahan 4 wadah tematik, transparansi kas RT, dan game edukasi interaktif.",
+        "longDescription": "Platform Bank Sampah Aktif Desa Mekarjaya yang dikembangkan sebagai Program Kerja Individu KKM Informatika UMC 2026. Aplikasi ini memfasilitasi inisiatif bank sampah warga dengan sistem pemilahan 4 wadah tematik tanpa perlu registrasi rumit, pencatatan akumulasi timbangan sampah terpilah, monitoring transparansi saldo tabungan kas per RT di 3 dusun (Cimenang, Ciganda, Cimuda), serta dilengkapi game edukasi interaktif pemilahan sampah.",
+        "features": [
+            "Sistem Pemilahan 4 Wadah Tematik",
+            "Transparansi Akumulasi Kas & Saldo per RT",
+            "Statistik Capaian Timbangan & Penjualan Sampah",
+            "Game Edukasi Interaktif Pemilahan Sampah",
+            "Katalog Sampah & Informasi Tarif per Kategori"
+        ],
+        "image": "assets/projects/Bank sampah desa mekarjaya/Hero section.png",
+        "images": [
+            "assets/projects/Bank sampah desa mekarjaya/Hero section.png",
+            "assets/projects/Bank sampah desa mekarjaya/capaian statistik.png",
+            "assets/projects/Bank sampah desa mekarjaya/game pilah sampah.png"
+        ],
+        "category": "Web App",
+        "tags": ["Tailwind CSS", "JavaScript", "Web App"],
+        "sourceCode": "#",
+        "liveDemo": "#"
     }
 ]

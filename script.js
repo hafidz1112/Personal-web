@@ -47,6 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tag === "React" || tag === "Express") colorClass = "bg-blue-100 text-blue-700";
         if (tag === "Tailwind CSS") colorClass = "bg-sky-100 text-sky-700";
         if (tag === "MySQL") colorClass = "bg-emerald-100 text-emerald-700";
+        if (tag === "JavaScript") colorClass = "bg-amber-100 text-amber-800";
         return `<span class="text-xs font-semibold ${colorClass} px-3 py-1 rounded-full">${tag}</span>`;
       }).join("");
     }
@@ -172,6 +173,7 @@ document.addEventListener("DOMContentLoaded", () => {
       if (tag === "Tailwind CSS") colorClass = "bg-sky-50 text-sky-600";
       if (tag === "Node.js") colorClass = "bg-green-50 text-green-600";
       if (tag === "IoT") colorClass = "bg-red-50 text-red-600";
+      if (tag === "JavaScript") colorClass = "bg-amber-50 text-amber-700";
 
       return `<span class="text-[11px] font-medium ${colorClass} px-2 py-0.5 rounded-md">${tag}</span>`;
     }).join("");
