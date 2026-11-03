@@ -38,27 +38,28 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("modal-title").textContent = project.title;
     document.getElementById("modal-description").textContent = project.longDescription || project.description;
 
-    // Render tags dinamis di modal
+    // Render tags dinamis di modal (Gaya monokrom/clean - no AI rainbow tags)
     const modalTags = document.getElementById("modal-tags");
     if (modalTags) {
       modalTags.innerHTML = (project.tags || []).map(tag => {
-        let colorClass = "bg-gray-100 text-gray-700";
-        if (tag === "Laravel") colorClass = "bg-orange-100 text-orange-700";
-        if (tag === "React" || tag === "Express") colorClass = "bg-blue-100 text-blue-700";
-        if (tag === "Tailwind CSS") colorClass = "bg-sky-100 text-sky-700";
-        if (tag === "MySQL") colorClass = "bg-emerald-100 text-emerald-700";
-        if (tag === "JavaScript") colorClass = "bg-amber-100 text-amber-800";
-        return `<span class="text-xs font-semibold ${colorClass} px-3 py-1 rounded-full">${tag}</span>`;
+        return `<span class="inline-flex items-center px-2.5 py-1 text-xs font-mono font-medium text-slate-700 bg-slate-100 border border-slate-200 rounded-md">${tag}</span>`;
       }).join("");
     }
 
-    // Render fitur utama jika ada
+    // Render fitur utama jika ada (Clean bullet, no generic neon icons)
     const modalFeaturesContainer = document.getElementById("modal-features-container");
     const modalFeatures = document.getElementById("modal-features");
     if (modalFeatures && modalFeaturesContainer) {
       if (project.features && project.features.length > 0) {
         modalFeaturesContainer.classList.remove("hidden");
-        modalFeatures.innerHTML = project.features.map(f => `<li class="flex items-center gap-2"><i class="fas fa-check-circle text-emerald-500 text-xs"></i> <span>${f}</span></li>`).join("");
+        modalFeatures.innerHTML = project.features.map(f => {
+          return `
+            <li class="flex items-start gap-2 text-xs sm:text-sm text-slate-700">
+              <span class="mt-1.5 h-1.5 w-1.5 rounded-full bg-slate-800 shrink-0"></span>
+              <span class="leading-relaxed">${f}</span>
+            </li>
+          `;
+        }).join("");
       } else {
         modalFeaturesContainer.classList.add("hidden");
       }
@@ -75,7 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
         galleryThumbnails.innerHTML = project.images.map((imgSrc, idx) => {
           const isActive = imgSrc === (project.image || project.images[0]);
           return `
-            <button type="button" class="gallery-thumb-btn shrink-0 w-20 h-14 rounded-lg overflow-hidden border-2 transition duration-200 ${isActive ? 'border-yellow-500 ring-2 ring-yellow-500/50 scale-105' : 'border-transparent opacity-70 hover:opacity-100'}" data-src="${imgSrc}">
+            <button type="button" class="gallery-thumb-btn shrink-0 w-20 h-13 rounded-lg overflow-hidden border-2 transition-all duration-200 cursor-pointer ${isActive ? 'border-slate-900 ring-2 ring-slate-900/10' : 'border-slate-200 opacity-60 hover:opacity-100'}" data-src="${imgSrc}">
               <img src="${imgSrc}" alt="Thumbnail ${idx + 1}" class="w-full h-full object-cover">
             </button>
           `;
@@ -87,11 +88,11 @@ document.addEventListener("DOMContentLoaded", () => {
             if (mainImg && newSrc) {
               mainImg.src = newSrc;
               galleryThumbnails.querySelectorAll(".gallery-thumb-btn").forEach(b => {
-                b.classList.remove("border-yellow-500", "ring-2", "ring-yellow-500/50", "scale-105");
-                b.classList.add("border-transparent", "opacity-70");
+                b.classList.remove("border-slate-900", "ring-2", "ring-slate-900/10");
+                b.classList.add("border-slate-200", "opacity-60");
               });
-              btn.classList.remove("border-transparent", "opacity-70");
-              btn.classList.add("border-yellow-500", "ring-2", "ring-yellow-500/50", "scale-105");
+              btn.classList.remove("border-slate-200", "opacity-60");
+              btn.classList.add("border-slate-900", "ring-2", "ring-slate-900/10");
             }
           });
         });
@@ -100,11 +101,37 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Direct link tombol action modal
+    // Direct link tombol action modal dengan handling status privat/tersedia
     const sourceBtn = document.getElementById("modal-source-btn");
     const demoBtn = document.getElementById("modal-demo-btn");
-    if (sourceBtn) sourceBtn.href = project.sourceCode || "#";
-    if (demoBtn) demoBtn.href = project.liveDemo || "#";
+    
+    if (sourceBtn) {
+      if (project.sourceCode && project.sourceCode !== "#") {
+        sourceBtn.href = project.sourceCode;
+        sourceBtn.classList.remove("opacity-40", "pointer-events-none");
+        sourceBtn.removeAttribute("tabindex");
+        sourceBtn.innerHTML = `<i class="fab fa-github text-sm"></i> <span>Source Code</span>`;
+      } else {
+        sourceBtn.href = "#";
+        sourceBtn.classList.add("opacity-40", "pointer-events-none");
+        sourceBtn.setAttribute("tabindex", "-1");
+        sourceBtn.innerHTML = `<i class="fab fa-github text-sm"></i> <span>Repository Privat</span>`;
+      }
+    }
+
+    if (demoBtn) {
+      if (project.liveDemo && project.liveDemo !== "#") {
+        demoBtn.href = project.liveDemo;
+        demoBtn.classList.remove("opacity-40", "pointer-events-none");
+        demoBtn.removeAttribute("tabindex");
+        demoBtn.innerHTML = `<span>Buka Live Demo</span> <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>`;
+      } else {
+        demoBtn.href = "#";
+        demoBtn.classList.add("opacity-40", "pointer-events-none");
+        demoBtn.setAttribute("tabindex", "-1");
+        demoBtn.innerHTML = `<span>Demo Belum Tersedia</span>`;
+      }
+    }
 
     // Tampilkan Modal dengan Animasi Soft
     modal.classList.remove("opacity-0", "pointer-events-none");
@@ -167,44 +194,36 @@ document.addEventListener("DOMContentLoaded", () => {
     card.className = `bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full group cursor-pointer ${animateScroll ? 'animate-on-scroll opacity-0' : ''}`;
 
     const tagsHTML = (project.tags || []).map(tag => {
-      let colorClass = "bg-gray-50 text-gray-600";
-      if (tag === "Laravel") colorClass = "bg-orange-50 text-orange-600";
-      if (tag === "React" || tag === "Express") colorClass = "bg-blue-50 text-blue-600";
-      if (tag === "Tailwind CSS") colorClass = "bg-sky-50 text-sky-600";
-      if (tag === "Node.js") colorClass = "bg-green-50 text-green-600";
-      if (tag === "IoT") colorClass = "bg-red-50 text-red-600";
-      if (tag === "JavaScript") colorClass = "bg-amber-50 text-amber-700";
-
-      return `<span class="text-[11px] font-medium ${colorClass} px-2 py-0.5 rounded-md">${tag}</span>`;
+      return `<span class="text-[11px] font-mono font-medium bg-slate-100 text-slate-700 border border-slate-200/70 px-2 py-0.5 rounded-md">${tag}</span>`;
     }).join("");
 
     card.innerHTML = `
       <div>
-          <div class="h-48 w-full bg-gray-900 overflow-hidden relative group-hover:brightness-95 transition duration-300">
+          <div class="h-48 w-full bg-slate-950 overflow-hidden relative group-hover:brightness-95 transition duration-300">
               <img src="${project.image}" alt="${project.title} Screenshot" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-              <div class="absolute top-3 right-3 bg-black/70 backdrop-blur-xs text-white text-[11px] font-semibold px-2.5 py-1 rounded-full">
+              <div class="absolute top-3 right-3 bg-slate-950/80 backdrop-blur-xs text-white text-[11px] font-mono font-medium px-2.5 py-0.5 rounded-md border border-white/10">
                   ${project.category || 'Web App'}
               </div>
-              <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
-                  <span class="bg-white/90 text-gray-900 text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-lg">
-                      <i class="fas fa-search-plus"></i> Lihat Detail
+              <div class="absolute inset-0 bg-slate-950/30 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center gap-2">
+                  <span class="bg-white text-slate-900 text-xs font-semibold px-3 py-1.5 rounded-lg flex items-center gap-1.5 shadow-md">
+                      <i class="fas fa-search-plus text-[11px]"></i> Detail Proyek
                   </span>
               </div>
           </div>
           <div class="p-6">
-              <h3 class="text-xl font-bold text-gray-800 mb-1.5 group-hover:text-yellow-600 transition duration-200">${project.title}</h3>
+              <h3 class="text-xl font-bold text-gray-800 mb-1.5 group-hover:text-slate-950 transition duration-200">${project.title}</h3>
               <p class="text-sm text-gray-600 leading-relaxed mb-4 line-clamp-2">${project.description}</p>
               <div class="flex flex-wrap gap-1.5">${tagsHTML}</div>
           </div>
       </div>
       <div class="p-6 pt-0 flex gap-2">
-          <button class="open-detail-btn flex-1 py-2 text-center text-xs font-semibold bg-gray-900 text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shadow-xs">
-              <i class="fas fa-info-circle"></i> Lihat Detail
+          <button class="open-detail-btn flex-1 py-2 text-center text-xs font-semibold bg-slate-900 text-white hover:bg-slate-800 rounded-xl transition duration-200 flex items-center justify-center gap-1.5 shadow-xs cursor-pointer">
+              <i class="fas fa-info-circle text-[11px]"></i> Detail Proyek
           </button>
-          <a href="${project.sourceCode || '#'}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-gray-100 text-gray-700 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Source Code">
+          <a href="${project.sourceCode || '#'}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl transition duration-200 flex items-center justify-center gap-1 ${project.sourceCode === '#' ? 'opacity-40 pointer-events-none' : ''}" title="${project.sourceCode === '#' ? 'Repository Privat' : 'Source Code'}">
               <i class="fab fa-github text-sm"></i>
           </a>
-          <a href="${project.liveDemo || '#'}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-yellow-500 text-black hover:bg-yellow-400 rounded-xl transition duration-200 flex items-center justify-center gap-1" title="Live Demo">
+          <a href="${project.liveDemo || '#'}" target="_blank" onclick="event.stopPropagation()" class="py-2 px-3 text-center text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 rounded-xl transition duration-200 flex items-center justify-center gap-1 ${project.liveDemo === '#' ? 'opacity-40 pointer-events-none' : ''}" title="${project.liveDemo === '#' ? 'Demo Belum Tersedia' : 'Live Demo'}">
               <i class="fas fa-external-link-alt text-[11px]"></i>
           </a>
       </div>

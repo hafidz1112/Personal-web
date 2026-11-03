@@ -2,13 +2,13 @@
     {
         "id": "daily-sales-report",
         "title": "Daily Sales Report - Pertamina Retail",
-        "description": "Aplikasi berbasis web untuk mengelola, mencatat, dan menganalisis laporan penjualan harian secara terstruktur, terintegrasi, dan responsif.",
-        "longDescription": "Sistem informasi Daily Sales Report yang dirancang khusus untuk operasional SPBU / Pertamina Retail. Memungkinkan staf dan manajemen untuk memantau arus kas, stok BBM harian, transaksi non-tunai, serta pencatatan pendapatan harian secara real-time dengan grafik analitik.",
+        "description": "Sistem pencatatan laporan penjualan dan rekonsiliasi arus kas harian untuk operasional SPBU Pertamina Retail.",
+        "longDescription": "Aplikasi web internal untuk operasional SPBU Pertamina Retail. Staf dan pengelola menginput volume penjualan tiap dispenser, mencatat penerimaan transaksi tunai maupun non-tunai, memantau sisa stok tangki pendam, serta merekap arus kas per shift tanpa selisih manual.",
         "features": [
-            "Pencatatan Penjualan Harian Automatis",
-            "Manajemen Stok & Tangki BBM",
-            "Grafik Analitik Laporan & Export Data",
-            "Manajemen Hak Akses Admin & Staf"
+            "Pencatatan volume penjualan BBM harian",
+            "Monitoring sisa stok tangki pendam",
+            "Rekonsiliasi transaksi tunai dan non-tunai per shift",
+            "Ekspor laporan pendapatan dan ringkasan operasional"
         ],
         "image": "assets/projects/Pertamina retail/dashboard_overview.png",
         "images": [
@@ -23,13 +23,13 @@
     {
         "id": "library-umc",
         "title": "Library UMC",
-        "description": "Sistem informasi perpustakaan berbasis web untuk manajemen katalog buku, peminjaman, pengembalian, serta pencatatan riwayat transaksi anggota.",
-        "longDescription": "Platform Digital Library Universitas Muhammadiyah Cirebon (UMC) yang mempermudah mahasiswa dan pustakawan dalam pencarian katalog buku, peminjaman secara digital, notifikasi tenggat pengembalian, dan analisis statistik pembaca.",
+        "description": "Katalog pustaka digital dan sirkulasi peminjaman buku Universitas Muhammadiyah Cirebon.",
+        "longDescription": "Sistem informasi perpustakaan Universitas Muhammadiyah Cirebon (UMC). Mahasiswa dapat menelusuri ketersediaan buku langsung lewat web, sementara pustakawan memproses sirkulasi peminjaman, pengembalian, kalkulasi denda, serta pencatatan riwayat anggota.",
         "features": [
-            "Katalog Buku Digital & Pencarian Cepat",
-            "Sistem Peminjaman & Pengembalian Otomatis",
-            "Riwayat Transaksi & Denda Anggota",
-            "Laporan Aktivitas Perpustakaan"
+            "Pencarian katalog koleksi buku digital",
+            "Sirkulasi peminjaman dan pengembalian buku",
+            "Pencatatan denda keterlambatan anggota",
+            "Riwayat sirkulasi dan aktivitas peminjaman"
         ],
         "image": "assets/projects/library_umc/dashboard_overview.png",
         "images": [
@@ -37,21 +37,21 @@
             "assets/projects/library_umc/catalog_overview.png"
         ],
         "category": "Web App",
-        "tags": [ "React", "Tailwind CSS", "MySQL", "express"],
+        "tags": ["React", "Express", "Tailwind CSS", "MySQL"],
         "sourceCode": "#",
         "liveDemo": "#"
     },
     {
         "id": "bank-sampah-mekarjaya",
         "title": "Bank Sampah Desa Mekarjaya",
-        "description": "Sistem informasi inisiatif Bank Sampah Aktif Desa Mekarjaya berbasis pemilahan 4 wadah tematik, transparansi kas RT, dan game edukasi interaktif.",
-        "longDescription": "Platform Bank Sampah Aktif Desa Mekarjaya yang dikembangkan sebagai Program Kerja Individu KKM Informatika UMC 2026. Aplikasi ini memfasilitasi inisiatif bank sampah warga dengan sistem pemilahan 4 wadah tematik tanpa perlu registrasi rumit, pencatatan akumulasi timbangan sampah terpilah, monitoring transparansi saldo tabungan kas per RT di 3 dusun (Cimenang, Ciganda, Cimuda), serta dilengkapi game edukasi interaktif pemilahan sampah.",
+        "description": "Sistem penimbangan sampah 4 kategori, transparansi saldo kas RT, dan game edukasi untuk Desa Mekarjaya.",
+        "longDescription": "Platform web untuk program KKM Informatika UMC 2026 di Desa Mekarjaya. Aplikasi ini mencatat hasil timbangan sampah warga pada 4 kategori wadah, menampilkan akumulasi kas per RT di 3 dusun (Cimenang, Ciganda, Cimuda), serta menyediakan game interaktif untuk edukasi pemilahan sampah warga.",
         "features": [
-            "Sistem Pemilahan 4 Wadah Tematik",
-            "Transparansi Akumulasi Kas & Saldo per RT",
-            "Statistik Capaian Timbangan & Penjualan Sampah",
-            "Game Edukasi Interaktif Pemilahan Sampah",
-            "Katalog Sampah & Informasi Tarif per Kategori"
+            "Pemilahan sampah berbasis 4 wadah tematik",
+            "Pencatatan timbangan dan konversi saldo sampah",
+            "Transparansi saldo tabungan kas per RT di 3 dusun",
+            "Game interaktif edukasi pemilahan sampah",
+            "Daftar tarif dan klasifikasi jenis sampah"
         ],
         "image": "assets/projects/Bank sampah desa mekarjaya/Hero section.png",
         "images": [

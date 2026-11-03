@@ -210,60 +210,82 @@
     </section>
 
     <!-- Modal Detail Project -->
-    <div id="project-modal" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 transition-all duration-300 opacity-0 pointer-events-none">
-        <div id="project-modal-card" class="bg-white rounded-3xl max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl transition-all transform scale-95 duration-300 relative border border-gray-100 flex flex-col">
-            <!-- Close Button -->
-            <button id="close-modal-btn" aria-label="Close modal" class="absolute top-4 right-4 z-10 bg-black/50 hover:bg-black text-white w-9 h-9 rounded-full flex items-center justify-center transition duration-200 shadow-md">
-                <i class="fas fa-times"></i>
-            </button>
-
-            <!-- Modal Image Header -->
-            <div class="relative h-48 sm:h-80 w-full bg-gray-900 shrink-0 flex items-center justify-center overflow-hidden">
-                <img id="modal-img" src="" alt="Project Image" class="w-full h-full object-contain transition-all duration-300">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent pointer-events-none"></div>
-                <div id="modal-category" class="absolute bottom-4 left-6 bg-yellow-500 text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider shadow">
-                    Category
+    <div id="project-modal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-md z-50 flex items-center justify-center p-3 sm:p-6 transition-all duration-300 opacity-0 pointer-events-none">
+        <div id="project-modal-card" class="bg-white rounded-2xl max-w-3xl w-full max-h-[92vh] overflow-hidden shadow-2xl transition-all transform scale-95 duration-300 relative border border-slate-200/90 flex flex-col">
+            
+            <!-- Modal Header Bar (Clean, App-like, Anti-AI) -->
+            <div class="px-5 py-3.5 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white/90 backdrop-blur-sm sticky top-0 z-20">
+                <div class="flex items-center gap-2">
+                    <span id="modal-category" class="inline-flex items-center px-2.5 py-0.5 rounded-md text-xs font-mono font-medium bg-slate-100 text-slate-800 border border-slate-200">
+                        Web App
+                    </span>
+                    <span class="text-slate-300 text-xs">/</span>
+                    <span class="text-xs text-slate-500 font-mono">Detail Proyek</span>
                 </div>
+                <button id="close-modal-btn" aria-label="Tutup dialog" class="h-8 w-8 rounded-lg text-slate-400 hover:text-slate-900 hover:bg-slate-100 flex items-center justify-center transition border border-transparent hover:border-slate-200 cursor-pointer">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+                </button>
             </div>
 
-            <!-- Thumbnail Gallery (Multi-image support) -->
-            <div id="modal-gallery-container" class="px-6 pt-4 hidden">
-                <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-2">Galeri Tangkapan Layar</p>
-                <div id="modal-gallery-thumbnails" class="flex gap-3 overflow-x-auto pb-2"></div>
-            </div>
+            <!-- Modal Scrollable Body -->
+            <div class="overflow-y-auto flex-grow p-5 sm:p-6 space-y-5">
+                <!-- Screenshot Showcase -->
+                <div class="space-y-3">
+                    <div class="relative w-full rounded-xl overflow-hidden border border-slate-200/90 bg-slate-950 flex items-center justify-center">
+                        <img id="modal-img" src="" alt="Project Image" class="w-full h-56 sm:h-80 object-contain transition-all duration-300">
+                    </div>
 
-            <!-- Modal Content -->
-            <div class="p-6 sm:p-8 flex-grow">
-                <h2 id="modal-title" class="text-2xl sm:text-3xl font-extrabold text-gray-900 mb-3" style="font-family: 'Bricolage Grotesque', sans-serif;">
-                    Project Title
-                </h2>
-                
-                <div id="modal-tags" class="flex flex-wrap gap-2 mb-6"></div>
+                    <!-- Thumbnail Gallery -->
+                    <div id="modal-gallery-container" class="hidden">
+                        <div class="flex items-center justify-between mb-2">
+                            <span class="text-[11px] font-mono uppercase tracking-wider text-slate-400">Tangkapan Layar</span>
+                            <span class="text-[11px] text-slate-400 font-mono">Pilih untuk pratinjau</span>
+                        </div>
+                        <div id="modal-gallery-thumbnails" class="flex gap-2 overflow-x-auto pb-1"></div>
+                    </div>
+                </div>
 
-                <div class="space-y-4 text-gray-700 leading-relaxed text-sm sm:text-base mb-6">
+                <!-- Title & Tech Stack -->
+                <div>
+                    <h2 id="modal-title" class="text-xl sm:text-2xl font-bold text-slate-900 mb-2.5 tracking-tight" style="font-family: 'Bricolage Grotesque', sans-serif;">
+                        Project Title
+                    </h2>
+                    <div id="modal-tags" class="flex flex-wrap gap-1.5"></div>
+                </div>
+
+                <!-- Project Content -->
+                <div class="space-y-4 pt-1">
                     <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-1">Deskripsi Proyek</h4>
-                        <p id="modal-description" class="text-gray-700"></p>
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-400 mb-1.5">Ikhtisar</h4>
+                        <p id="modal-description" class="text-slate-600 text-sm leading-relaxed"></p>
                     </div>
 
-                    <div id="modal-features-container" class="bg-gray-50 p-4 rounded-2xl border border-gray-100">
-                        <h4 class="text-xs font-bold text-gray-500 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                            <i class="fas fa-star text-yellow-500"></i> Fitur Utama
+                    <!-- Scope / Capabilities -->
+                    <div id="modal-features-container" class="rounded-xl border border-slate-200/80 bg-slate-50/70 p-4">
+                        <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-700 mb-2.5 flex items-center gap-2">
+                            <svg class="w-3.5 h-3.5 text-slate-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                            <span>Fungsi & Cakupan Sistem</span>
                         </h4>
-                        <ul id="modal-features" class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-600"></ul>
+                        <ul id="modal-features" class="grid grid-cols-1 sm:grid-cols-2 gap-2"></ul>
                     </div>
                 </div>
+            </div>
 
-                <!-- Modal Actions -->
-                <div class="pt-4 border-t border-gray-100 flex flex-col sm:flex-row gap-3">
-                    <a id="modal-source-btn" href="#" target="_blank" class="flex-1 py-3 px-4 text-center text-sm font-semibold bg-gray-100 text-gray-800 hover:bg-gray-200 rounded-xl transition duration-200 flex items-center justify-center gap-2">
-                        <i class="fab fa-github text-base"></i> View Source Code
+            <!-- Modal Action Footer (Sticky Bar) -->
+            <div class="px-5 py-3 border-t border-slate-100 bg-slate-50/80 flex flex-wrap items-center justify-between gap-3 shrink-0">
+                <span class="text-xs text-slate-400 font-mono hidden sm:inline-block">ESC untuk menutup</span>
+                <div class="flex items-center gap-2 w-full sm:w-auto ml-auto">
+                    <a id="modal-source-btn" href="#" target="_blank" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg border border-slate-200 bg-white text-slate-700 hover:bg-slate-50 hover:text-slate-900 transition shadow-xs">
+                        <i class="fab fa-github text-sm"></i>
+                        <span>Source Code</span>
                     </a>
-                    <a id="modal-demo-btn" href="#" target="_blank" class="flex-1 py-3 px-4 text-center text-sm font-semibold bg-black text-white hover:bg-gray-800 rounded-xl transition duration-200 flex items-center justify-center gap-2 shadow-sm">
-                        <i class="fas fa-external-link-alt text-xs"></i> Open Live Demo
+                    <a id="modal-demo-btn" href="#" target="_blank" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-2 px-4 py-2 text-xs font-medium rounded-lg bg-slate-900 text-white hover:bg-slate-800 transition shadow-xs">
+                        <span>Buka Live Demo</span>
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
                     </a>
                 </div>
             </div>
+
         </div>
     </div>
 
